@@ -13,6 +13,24 @@ public class Unit {
     protected Building builtFrom;
 
 
+    protected boolean beingBuilt;
+
+    /**
+     * getter for beingBuilt.
+     * @return - beingBuilt
+     */
+    public boolean isBeingBuilt() {
+        return beingBuilt;
+    }
+
+    /**
+     * setter for beingBuilt;
+     * @param beingBuilt - boolean value
+     */
+    public void setBeingBuilt(boolean beingBuilt) {
+        this.beingBuilt = beingBuilt;
+    }
+
     /**
      * Unit constructor.
      * @param mineralCost - mineral cost
@@ -27,5 +45,6 @@ public class Unit {
         this.buildTime = buildTime;
         this.dependentOn = dependentOn;
         this.builtFrom = builtFrom;
+        this.beingBuilt = false;
     }
 }

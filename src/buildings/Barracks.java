@@ -13,5 +13,5 @@ public class Barracks extends Building {
     public Barracks() {
         super(150, 0, 65, new SupplyDepot());
     }
-
+    
 }

@@ -1,5 +1,7 @@
 package units;
 
+import buildings.*;
+
 public class Unit {
     protected double mineralCost;
     protected double gasCost;
@@ -17,9 +19,9 @@ public class Unit {
      * @param gasCost - gas cost
      * @param buildTime - build time;
      * @param dependentOn - unit its dependent on
-     * @param builtForm - building its built from
+     * @param builtFrom - building its built from
      */
-    public Unit(double mineralCost, double gasCost, int buildTime, Unit dependentOn, Building builtForm) {
+    public Unit(double mineralCost, double gasCost, int buildTime, Unit dependentOn, Building builtFrom) {
         this.mineralCost = mineralCost;
         this.gasCost = gasCost;
         this.buildTime = buildTime;

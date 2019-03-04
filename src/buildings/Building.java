@@ -31,6 +31,15 @@ public class Building {
      */
     protected boolean buildingUnit = false;
 
+    /**
+     * Building constructor.
+     *
+     * @param mineralCost - the cost in minerals
+     * @param gasCost - the cost in gas
+     * @param buildTime - the build time
+     * @param dependentOn - the type of building the current building is dependent on
+     * @param units - the type of units the building can build
+     */
     public Building(double mineralCost, double gasCost, int buildTime, Building dependentOn, List<Unit> units) {
         this.mineralCost = mineralCost;
         this.gasCost = gasCost;

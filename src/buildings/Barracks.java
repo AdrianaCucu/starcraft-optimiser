@@ -1,5 +1,8 @@
 package buildings;
 
+import units.*;
+import java.util.*;
+
 public class Barracks extends Building {
 
     /**
@@ -9,9 +12,10 @@ public class Barracks extends Building {
      * Gas cost: 0
      * Build Time: 65 seconds
      * Dependency: Supply Depot
+     * Builds units: Marine
      */
     public Barracks() {
-        super(150, 0, 65, new SupplyDepot());
+        super(150, 0, 65, new SupplyDepot(), Arrays.asList(new Marine()));
     }
     
 }

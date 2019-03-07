@@ -1,17 +1,21 @@
 package units;
 
 import buildings.*;
+import resources.*;
 
 public class Unit {
+
     protected double mineralCost;
     protected double gasCost;
+
     /**
      * Build time in seconds
      */
     protected int buildTime;
-    protected Unit dependentOn;
-    protected Building builtFrom;
 
+    //no dependency for core program
+    protected Building dependentOn;
+    protected Building builtFrom;
 
     protected boolean beingBuilt;
 
@@ -33,18 +37,25 @@ public class Unit {
 
     /**
      * Unit constructor.
-     * @param mineralCost - mineral cost
-     * @param gasCost - gas cost
-     * @param buildTime - build time;
-     * @param dependentOn - unit its dependent on
-     * @param builtFrom - building its built from
+     *
+     * @param mineralCost - the cost in minerals
+     * @param gasCost - the cost in gas
+     * @param buildTime - the build time
+     * @param dependentOn - the type of building the unit is dependent on
+     * @param builtFrom - the type of building that builds the unit
      */
-    public Unit(double mineralCost, double gasCost, int buildTime, Unit dependentOn, Building builtFrom) {
+    public Unit(double mineralCost, double gasCost, int buildTime, Building dependentOn, Building builtFrom) {
         this.mineralCost = mineralCost;
         this.gasCost = gasCost;
         this.buildTime = buildTime;
         this.dependentOn = dependentOn;
         this.builtFrom = builtFrom;
         this.beingBuilt = false;
+    }
+
+    // need to check that we have enough resources before
+    public void buildUnit() {
+        Minerals.total -= mineralCost;
+        Gas.total -= gasCost;
     }
 }

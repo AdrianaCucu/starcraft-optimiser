@@ -55,6 +55,7 @@ public class Unit {
 
     // need to check that we have enough resources before
     public void buildUnit() {
+        this.beingBuilt = true;
         Minerals.total -= mineralCost;
         Gas.total -= gasCost;
     }

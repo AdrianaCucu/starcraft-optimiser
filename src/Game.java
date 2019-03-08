@@ -1,3 +1,5 @@
 public class Game {
-    GAME
+    GameState goal = new GameState();
+
+
 }

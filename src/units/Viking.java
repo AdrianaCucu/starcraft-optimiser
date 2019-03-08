@@ -3,6 +3,9 @@ package units;
 import buildings.*;
 
 public class Viking extends Unit {
+
+    public static final String IDENT = "Viking";
+
     /**
      * Viking constructor.
      */

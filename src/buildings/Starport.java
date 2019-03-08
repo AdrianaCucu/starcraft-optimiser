@@ -5,6 +5,8 @@ import java.util.*;
 
 public class Starport extends Building {
 
+    public static final String IDENT = "Starport";
+
     /**
      * Constructor for Starport.
      *

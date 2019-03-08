@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Refinery extends Building {
 
+    public static final String IDENT = "Refinery";
+
     /**
      * Constructor for Refinery.
      *

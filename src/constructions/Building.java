@@ -17,14 +17,14 @@ public class Building extends Construction {
     /**
      * The building cannot be built unless the dependency is satisfied.
      */
-    protected Building dependentOn;
+    protected String dependentOn;
 
     /**
      * Stores the types of units each building can build.
      * Different for each type of building.
      * Can be empty.
      */
-    protected List<Unit> units;
+    protected List<String> units;
 
     /**
      * Used to check if the building is constructing a worker at the current time.
@@ -40,7 +40,7 @@ public class Building extends Construction {
      * @param dependentOn - the type of building the current building is dependent on
      * @param units - the type of units the building can build
      */
-    public Building(double mineralCost, double gasCost, int buildTime, Building dependentOn, List<Unit> units) {
+    public Building(double mineralCost, double gasCost, int buildTime, String dependentOn, List<String> units) {
         this.mineralCost = mineralCost;
         this.gasCost = gasCost;
         this.buildTime = buildTime;
@@ -65,7 +65,7 @@ public class Building extends Construction {
      *
      * @return the building that represents the dependency or null
      */
-    public Building getDependency() {
+    public String getDependency() {
         return dependentOn;
     }
 

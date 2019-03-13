@@ -13,8 +13,8 @@ public class Unit extends Construction {
     protected int buildTime;
 
     //no dependency for core program
-    protected Building dependentOn;
-    protected Building builtFrom;
+    protected String dependentOn;
+    protected String builtFrom;
 
     protected boolean beingBuilt;
 
@@ -43,7 +43,7 @@ public class Unit extends Construction {
      * @param dependentOn - the type of building the unit is dependent on
      * @param builtFrom - the type of building that builds the unit
      */
-    public Unit(double mineralCost, double gasCost, int buildTime, Building dependentOn, Building builtFrom) {
+        public Unit(double mineralCost, double gasCost, int buildTime, String dependentOn, String builtFrom) {
         this.mineralCost = mineralCost;
         this.gasCost = gasCost;
         this.buildTime = buildTime;

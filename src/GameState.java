@@ -1,7 +1,6 @@
 import java.util.*;
 import constructions.*;
-
-
+import base.*;
 
 public class GameState {
     private static int minerals;
@@ -11,15 +10,21 @@ public class GameState {
     private static LinkedHashMap<Integer, ArrayList<Construction>> buildOrder;
     private static LinkedHashMap<Integer, ArrayList<Construction>> completionQueue;
     private static HashMap<String, ArrayList<Construction>> completedConstructions;
+    private static Base base;
 
     public static HashMap<String, ArrayList<Construction>> getCompletedConstructions() {
         return completedConstructions;
     }
 
     public static void initialise() {
+        Game.setGoalReached(false);
+
+        base = new Base();
+        completedConstructions = new LinkedHashMap<>();
 
         ArrayList<Construction> commandCenters = new ArrayList<>();
         commandCenters.add(new CommandCenter());
+
 
         completedConstructions.put(CommandCenter.IDENT, commandCenters);
 

@@ -5,22 +5,21 @@ import base.*;
 public class Worker extends Unit {
 
     public static final String IDENT = "Worker";
+    private BaseUnit assignedBaseUnit = null;
 
-    private Base assignedBase = null;
+    public BaseUnit getAssignedBaseUnit() {
+        return assignedBaseUnit;
+    }
 
     /**
      * Worker constructor.
      */
     public Worker() {
-        super(50, 0, 17, null, new CommandCenter());
+        super(50, 0, 17, null, CommandCenter.IDENT);
     }
 
-    public void assignPatch(MineralPatch patch) {
-        assignedBase = patch;
-    }
-
-    public void assignGeyser(Geyser geyser) {
-        assignedBase = geyser;
+    public void assignPatch(BaseUnit baseUnit) {
+        this.assignedBaseUnit = baseUnit;
     }
 
 }

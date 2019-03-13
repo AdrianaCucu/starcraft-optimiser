@@ -1,19 +1,27 @@
 package base;
 
+import java.util.ArrayList;
+
 public class Base {
+    private ArrayList<MineralPatch> patches;
+    private ArrayList<Geyser> geysers;
 
-    private int numberOfWorkers = 0;
+    public Base() {
+        patches = new ArrayList<>();
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
+        patches.add(new MineralPatch());
 
-    /**
-     * Maximum 3 workers at the same time.
-     */
-    private final int MAX_WORKERS = 3;
-
-    public void incrementWorkers() {
-        numberOfWorkers += 1;
+        geysers = new ArrayList<>();
+        geysers.add(new Geyser());
+        geysers.add(new Geyser());
     }
 
-    public int getWorkers() {
-        return numberOfWorkers;
-    }
+
 }

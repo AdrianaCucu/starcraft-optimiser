@@ -1,5 +1,6 @@
 package base;
 
-public class Geyser extends Base {
+public class Geyser extends BaseUnit {
+
 
 }

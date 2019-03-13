@@ -16,7 +16,7 @@ public class CommandCenter extends Building {
      * Builds units: Worker
      */
     public CommandCenter() {
-        super(400, 0, 100, null, Arrays.asList(new Worker()));
+        super(400, 0, 100, null, Arrays.asList(Worker.IDENT));
     }
 
 }

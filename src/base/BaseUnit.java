@@ -1,6 +1,6 @@
 package base;
 
-public class MineralPatch extends BaseUnit {
+public class BaseUnit {
     private int numberOfWorkers = 0;
 
     /**
@@ -15,5 +15,4 @@ public class MineralPatch extends BaseUnit {
     public int getWorkers() {
         return numberOfWorkers;
     }
-
 }

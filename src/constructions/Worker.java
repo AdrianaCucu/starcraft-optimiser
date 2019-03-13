@@ -1,28 +1,26 @@
 package constructions;
 
+import base.*;
+
 public class Worker extends Unit {
-    private boolean isAssigned;
-    private Base assignedBase;
 
+    public static final String IDENT = "Worker";
 
+    private Base assignedBase = null;
 
     /**
      * Worker constructor.
      */
     public Worker() {
         super(50, 0, 17, null, new CommandCenter());
-        this.isAssigned = false;
-        this.assignedBase = null;
     }
 
-    public void assignPatch() {
-        isAssigned = true;
-        assignedBase = new Patch();
+    public void assignPatch(MineralPatch patch) {
+        assignedBase = patch;
     }
 
-    public void assignGeyser() {
-        isAssigned = true;
-        assignedBase = new Geyser();
+    public void assignGeyser(Geyser geyser) {
+        assignedBase = geyser;
     }
 
 }

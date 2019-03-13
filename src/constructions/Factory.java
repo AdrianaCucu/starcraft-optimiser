@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class Factory extends Building {
 
+    public static final String IDENT = "Factory";
+
     /**
      * Constructor for Factory.
      *

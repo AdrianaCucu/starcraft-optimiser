@@ -2,6 +2,9 @@ package constructions;
 
 
 public class Marine extends Unit {
+
+    public static final String IDENT = "Marine";
+
     /**
      * Marine constructor.
      */

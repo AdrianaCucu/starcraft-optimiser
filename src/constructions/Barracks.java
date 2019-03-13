@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Barracks extends Building {
 
+    public static final String IDENT = "Barracks";
+
     /**
      * Constructor for Barracks.
      *

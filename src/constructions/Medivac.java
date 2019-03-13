@@ -2,6 +2,9 @@ package constructions;
 
 
 public class Medivac extends Unit{
+
+    public static final String IDENT = "Medivac";
+
     /**
      * Medivac constructor.
      */

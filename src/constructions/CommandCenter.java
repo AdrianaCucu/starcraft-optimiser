@@ -4,6 +4,8 @@ import java.util.*;
 
 public class CommandCenter extends Building {
 
+    public static final String IDENT = "CommandCentre";
+
     /**
      * Constructor for Command Center.
      *

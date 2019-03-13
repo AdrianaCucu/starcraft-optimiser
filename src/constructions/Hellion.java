@@ -3,6 +3,8 @@ package constructions;
 
 public class Hellion extends Unit{
 
+    public static final String IDENT = "Hellion";
+
     /**
      * Hellion constructor.
      */

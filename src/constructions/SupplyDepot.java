@@ -4,6 +4,8 @@ import java.util.*;
 
 public class SupplyDepot extends Building {
 
+    public static final String IDENT = "SupplyDepot";
+
     /**
      * Constructor for Supply Depot.
      *

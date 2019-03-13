@@ -1,7 +1,7 @@
-import java.lang.reflect.Array;
 import java.util.*;
-import units.*;
 import constructions.*;
+
+
 
 public class GameState {
     private static int minerals;
@@ -16,21 +16,12 @@ public class GameState {
         return completedConstructions;
     }
 
-
-    public void initialiseGameState() {
-        this.minerals = 50;
-        this.gas = 0;
-        this.time = 0;
-
-        buildOrder = new LinkedHashMap<>();
-        completionQueue = new LinkedHashMap<>();
-        completedConstructions = new HashMap<>();
+    public static void initialise() {
 
         ArrayList<Construction> commandCenters = new ArrayList<>();
         commandCenters.add(new CommandCenter());
 
         completedConstructions.put(CommandCenter.IDENT, commandCenters);
-
 
         ArrayList<Construction> workers = new ArrayList<>();
         workers.add(new Worker());
@@ -43,6 +34,5 @@ public class GameState {
         completedConstructions.put(Worker.IDENT, workers);
 
     }
-
-
 }
+

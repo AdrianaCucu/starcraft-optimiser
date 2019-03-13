@@ -1,4 +1,4 @@
-package buildings;
+package constructions;
 
 import java.util.*;
 

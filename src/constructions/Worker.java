@@ -1,9 +1,8 @@
-package units;
-
-import buildings.*;
+package constructions;
 
 public class Worker extends Unit {
-    Base assignedBase;
+    private boolean isAssigned;
+    private Base assignedBase;
 
 
 
@@ -12,15 +11,18 @@ public class Worker extends Unit {
      */
     public Worker() {
         super(50, 0, 17, null, new CommandCenter());
+        this.isAssigned = false;
         this.assignedBase = null;
     }
 
     public void assignPatch() {
-
+        isAssigned = true;
+        assignedBase = new Patch();
     }
 
     public void assignGeyser() {
-
+        isAssigned = true;
+        assignedBase = new Geyser();
     }
 
 }

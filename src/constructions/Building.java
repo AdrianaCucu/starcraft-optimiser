@@ -1,10 +1,10 @@
-package buildings;
+package constructions;
 
 import resources.*;
-import units.*;
+
 import java.util.*;
 
-public class Building {
+public class Building extends Construction {
 
     protected double mineralCost;
     protected double gasCost;
@@ -61,7 +61,7 @@ public class Building {
     }
 
     /**
-     * Can be null, because not all buildings have dependencies.
+     * Can be null, because not all constructions have dependencies.
      *
      * @return the building that represents the dependency or null
      */
@@ -88,7 +88,7 @@ public class Building {
         buildingUnit = true;
     }
 
-    // only for buildings that are busy
+    // only for constructions that are busy
     /**
      * When the building finishes building a unit.
      *

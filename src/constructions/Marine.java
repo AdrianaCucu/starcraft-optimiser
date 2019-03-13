@@ -1,6 +1,4 @@
-package units;
-
-import buildings.*;
+package constructions;
 
 
 public class Marine extends Unit {

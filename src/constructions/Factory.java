@@ -1,6 +1,5 @@
-package buildings;
+package constructions;
 
-import units.*;
 import java.util.Arrays;
 
 public class Factory extends Building {

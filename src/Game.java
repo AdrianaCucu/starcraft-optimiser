@@ -1,5 +1,10 @@
+import constructions.*;
+
 public class Game {
-    GameState goal = new GameState();
+    for (Worker worker:
+        GameState.getCompletedConstructions().get(Worker.IDENT)) {
+
+    };
 
 
 }

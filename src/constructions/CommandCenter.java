@@ -1,6 +1,5 @@
-package buildings;
+package constructions;
 
-import units.*;
 import java.util.*;
 
 public class CommandCenter extends Building {

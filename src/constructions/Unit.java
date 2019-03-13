@@ -1,9 +1,8 @@
-package units;
+package constructions;
 
-import buildings.*;
 import resources.*;
 
-public class Unit {
+public class Unit extends Construction {
 
     protected double mineralCost;
     protected double gasCost;

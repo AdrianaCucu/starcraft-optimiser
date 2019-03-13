@@ -1,6 +1,5 @@
-package buildings;
+package constructions;
 
-import units.*;
 import java.util.*;
 
 public class Barracks extends Building {

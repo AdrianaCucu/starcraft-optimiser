@@ -1,4 +1,3 @@
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import constructions.*;
 
 public class StarcraftOptimiser {
@@ -7,9 +6,11 @@ public class StarcraftOptimiser {
 
         boolean goalAchieved = false;
         GameState.initialise();
+
+
         System.out.println(GameState.getCompletedConstructions().get(Worker.IDENT));
 
-        //Game.optimise();
+        Game.optimise();
 
     }
 }

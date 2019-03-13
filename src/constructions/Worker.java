@@ -18,7 +18,7 @@ public class Worker extends Unit {
         super(50, 0, 17, null, CommandCenter.IDENT);
     }
 
-    public void assignPatch(BaseUnit baseUnit) {
+    public void assignBaseUnit(BaseUnit baseUnit) {
         this.assignedBaseUnit = baseUnit;
     }
 

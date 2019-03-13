@@ -16,6 +16,10 @@ public class GameState {
         return completedConstructions;
     }
 
+    public static Base getBase() {
+        return base;
+    }
+
     public static void initialise() {
         Game.setGoalReached(false);
 
@@ -29,6 +33,7 @@ public class GameState {
         completedConstructions.put(CommandCenter.IDENT, commandCenters);
 
         ArrayList<Construction> workers = new ArrayList<>();
+        workers.add(new Worker());
         workers.add(new Worker());
         workers.add(new Worker());
         workers.add(new Worker());

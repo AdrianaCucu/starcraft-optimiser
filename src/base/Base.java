@@ -6,6 +6,10 @@ public class Base {
     private ArrayList<MineralPatch> patches;
     private ArrayList<Geyser> geysers;
 
+    public ArrayList<MineralPatch> getPatches() {
+        return patches;
+    }
+
     public Base() {
         patches = new ArrayList<>();
         patches.add(new MineralPatch());

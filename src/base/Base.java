@@ -27,5 +27,13 @@ public class Base {
         geysers.add(new Geyser());
     }
 
+    /**
+     * Checks for best spot to assign worker.
+     * @return
+     */
+    public BaseUnit checkBasicUnit() {
+        return patches.get(1);
+    }
+
 
 }

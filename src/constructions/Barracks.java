@@ -16,7 +16,7 @@ public class Barracks extends Building {
      * Builds units: Marine
      */
     public Barracks() {
-        super(150, 0, 65, new SupplyDepot(), Arrays.asList(new Marine()));
+        super(150, 0, 65, SupplyDepot.IDENT, Arrays.asList(Marine.IDENT));
     }
     
 }

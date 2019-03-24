@@ -15,8 +15,4 @@ public class Medivac extends Unit{
     public static String dependentOn = "";
     public static String builtFrom = Starport.IDENT;
 
-    public static void setPrecedence(int value) {
-        precedence = value;
-        Starport.setPrecedence(value);
-    }
 }

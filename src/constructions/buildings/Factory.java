@@ -15,8 +15,4 @@ public class Factory extends Building {
     public static String dependentOn = Barracks.IDENT;
     public static ArrayList<String> units = new ArrayList<>(Arrays.asList(Hellion.IDENT));
 
-    public static void setPrecedence(int value) {
-        precedence = value;
-        Barracks.setPrecedence(value);
-    }
 }

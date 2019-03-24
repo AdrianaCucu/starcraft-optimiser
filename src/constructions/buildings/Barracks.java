@@ -15,8 +15,4 @@ public class Barracks extends Building {
     public static String dependentOn = SupplyDepot.IDENT;
     public static ArrayList<String> units = new ArrayList<>(Arrays.asList(Marine.IDENT));
 
-    public static void setPrecedence(int value) {
-        precedence = value;
-        SupplyDepot.setPrecedence(value);
-    }
 }

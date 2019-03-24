@@ -187,7 +187,6 @@ public class GameState {
     }
 
     public static void updateGameState () {
-        time += 1;
         updateResources();
         updateConstructionsBeingBuilt();
 

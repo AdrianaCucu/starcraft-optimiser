@@ -15,8 +15,4 @@ public class Hellion extends Unit{
     public static String dependentOn = "";
     public static String builtFrom = Factory.IDENT;
 
-    public static void setPrecedence(int value) {
-        precedence = value;
-        Factory.setPrecedence(value);
-    }
 }

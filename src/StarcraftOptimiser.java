@@ -47,7 +47,7 @@ public class StarcraftOptimiser {
         }
 
         System.out.println();
-        System.out.println("Total time: " + (GameState.time / 60) + " minutes and " + (GameState.time % 60) + " seconds.");
+        System.out.println("Total time: " + GameState.time);
         System.out.println("Total gas: " + GameState.gas);
         System.out.println("Total minerals: " + GameState.minerals);
     }

@@ -15,8 +15,4 @@ public class Starport extends Building {
     public static String dependentOn = Factory.IDENT;
     public static ArrayList<String> units = new ArrayList<>(Arrays.asList(Medivac.IDENT, Viking.IDENT));
 
-    public static void setPrecedence(int value) {
-        precedence = value;
-        Factory.setPrecedence(value);
-    }
 }

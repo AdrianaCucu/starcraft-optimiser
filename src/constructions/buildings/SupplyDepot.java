@@ -1,8 +1,8 @@
 package constructions.buildings;
 
-import java.util.*;
-
 public class SupplyDepot extends Building {
+
+    public static int score = 0;
 
     public static final String IDENT = "supply depot";
 
@@ -10,6 +10,8 @@ public class SupplyDepot extends Building {
     public static double gasCost = 0;
     public static int buildTime = 30;
     public static String dependentOn = "";
-    public static ArrayList<String> units = new ArrayList<>();
 
+    public static void setScore(int number) {
+        score = number;
+    }
 }

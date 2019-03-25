@@ -71,9 +71,9 @@ public class GameState {
         units.put(Medivac.IDENT, 0);
         units.put(Viking.IDENT, 0);
 
-        workers.put("free", 6);
-        workers.put("gas", 0);
-        workers.put("minerals", 0);
+        workers.put(Worker.FREE, 6);
+        workers.put(Worker.GAS, 0);
+        workers.put(Worker.MINERALS, 0);
     }
 
     public static void updateBuildings (String key, String action) {
@@ -85,35 +85,35 @@ public class GameState {
         }
         else if (action.equals("finish")) {
             switch (key) {
-                case "hellion": {
+                case Hellion.IDENT: {
                     Integer busyNumber = busyBuildings.get(Hellion.builtFrom) - 1;
                     busyBuildings.put(Hellion.builtFrom, busyNumber);
                     Integer freeNumber = freeBuildings.get(Hellion.builtFrom) + 1;
                     freeBuildings.put(Hellion.builtFrom, freeNumber);
                     break;
                 }
-                case "marine": {
+                case Marine.IDENT: {
                     Integer busyNumber = busyBuildings.get(Marine.builtFrom) - 1;
                     busyBuildings.put(Marine.builtFrom, busyNumber);
                     Integer freeNumber = freeBuildings.get(Marine.builtFrom) + 1;
                     freeBuildings.put(Marine.builtFrom, freeNumber);
                     break;
                 }
-                case "medivac": {
+                case Medivac.IDENT: {
                     Integer busyNumber = busyBuildings.get(Medivac.builtFrom) - 1;
                     busyBuildings.put(Medivac.builtFrom, busyNumber);
                     Integer freeNumber = freeBuildings.get(Medivac.builtFrom) + 1;
                     freeBuildings.put(Medivac.builtFrom, freeNumber);
                     break;
                 }
-                case "viking": {
+                case Viking.IDENT: {
                     Integer busyNumber = busyBuildings.get(Viking.builtFrom) - 1;
                     busyBuildings.put(Viking.builtFrom, busyNumber);
                     Integer freeNumber = freeBuildings.get(Viking.builtFrom) + 1;
                     freeBuildings.put(Viking.builtFrom, freeNumber);
                     break;
                 }
-                case "worker": {
+                case Worker.IDENT: {
                     Integer busyNumber = busyBuildings.get(Worker.builtFrom) - 1;
                     busyBuildings.put(Worker.builtFrom, busyNumber);
                     Integer freeNumber = freeBuildings.get(Worker.builtFrom) + 1;
@@ -132,31 +132,33 @@ public class GameState {
     // 41 minerals / minute or 20 minerals / minute
     // 38 gas / minute
     private static void updateResources() {
-        if (workers.get("minerals") <= 16) {
-            minerals += workers.get("minerals") * (41.0 / 60);
+        if (workers.get(Worker.MINERALS) <= patches * 2) {
+            minerals += workers.get(Worker.MINERALS) * (41.0 / 60);
         } else {
-            minerals += 16 * (41.0/60) + (workers.get("minerals") - 16) * (20.0 / 60);
+            minerals += patches * 2 * (41.0/60) + (workers.get(Worker.MINERALS) - patches * 2) * (20.0 / 60);
         }
-        gas += workers.get("gas") * (38.0 / 60);
+        gas += workers.get(Worker.GAS) * (38.0 / 60);
     }
 
     private static void updateCompletedConstructions(String key) {
-        if (key.equals("hellion") || key.equals("marine") || key.equals("medivac") || key.equals("viking")) {
+        if (key.equals(Hellion.IDENT) || key.equals(Marine.IDENT) || key.equals(Medivac.IDENT) || key.equals(Viking.IDENT)) {
             Integer number = units.get(key) + 1;
             units.put(key, number);
             updateBuildings(key, "finish");
         }
 
-        else if (key.equals("worker")) {
-            Integer number = workers.get("free") + 1;
-            workers.put("free", number);
-            updateBuildings("worker", "finish");
+        else if (key.equals(Worker.IDENT)) {
+            Integer number = workers.get(Worker.FREE) + 1;
+            workers.put(Worker.FREE, number);
+            updateBuildings(Worker.IDENT, "finish");
         }
 
         else {
             Integer number = freeBuildings.get(key) + 1;
             freeBuildings.put(key, number);
         }
+
+        Decision.decisionsMade.add(time + " finished building " + key);
     }
 
     private static void updateConstructionsBeingBuilt() {
@@ -173,7 +175,7 @@ public class GameState {
                 // (because next second will be 0, so it will be finished)
                 // if it is different to 1, it subtracts a second to update the duration
                 for (int i = 0; i < durations.size(); i++) {
-                    if (durations.get(i) == 0) {
+                    if (durations.get(i) == 1) {
                         updateCompletedConstructions(key);
                     }
                     else {
@@ -186,22 +188,26 @@ public class GameState {
         }
     }
 
+    /**
+     * Returns true if the goal has been met and false otherwise.
+     */
+    private static boolean goalMet() {
+        for (String key : goal.keySet()) {
+            if (key.equals(Worker.IDENT) 
+                && ((workers.get(Worker.FREE) + workers.get(Worker.GAS) + workers.get(Worker.MINERALS)) < goal.get(key))) {
+                return false;
+            }
+            else if (!key.equals(Worker.IDENT) && (units.get(key) < goal.get(key))){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void updateGameState () {
         updateResources();
         updateConstructionsBeingBuilt();
 
-         // checks if the goal has been met and updates it accordingly
-        boolean goalMet = true;
-
-        for (String key : goal.keySet()) {
-            if (key.equals("worker") && ((workers.get("free") + workers.get("gas") + workers.get("minerals")) < goal.get(key))) {
-                goalMet = false;
-            }
-            else if (!key.equals("worker") && (units.get(key) < goal.get(key))){
-                goalMet = false;
-            }
-        }
-
-        Goal.goalAchieved = goalMet;
+        Goal.goalAchieved = goalMet();
     }
 }

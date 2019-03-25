@@ -1,5 +1,6 @@
 import java.sql.Ref;
 import java.util.*;
+import java.lang.reflect.*;
 
 import constructions.Construction;
 import constructions.buildings.*;
@@ -23,10 +24,10 @@ public class Decision {
             int index = random.nextInt(15);
 
             updateState(index);
-        }
 
-        // updates the game time
-        GameState.time += 1;
+            // updates the game time
+            GameState.time += 1;
+        }
     }
 
     // makes a random decision
@@ -37,36 +38,33 @@ public class Decision {
 
             // "reassign worker from free to gas"
             case 0: {
-                if (GameState.workers.get("free") > 0 && GameState.workers.get("gas") < 6) {
-                    reassignWorker("free", "gas");
-                    decisionsMade.add( "reassign worker from free to gas    " + GameState.time);
+                if (GameState.workers.get(Worker.FREE) > 0 && GameState.workers.get(Worker.GAS) < GameState.freeBuildings.get(Refinery.IDENT) * 3) {
+                    reassignWorker(Worker.FREE, Worker.GAS);
                 }
                 break;
             }
 
             // "reassign worker from free to minerals"
             case 1: {
-                if (GameState.workers.get("free") > 0 && GameState.workers.get("minerals") < 24) {
-                    reassignWorker("free", "minerals");
-                    decisionsMade.add( "reassign worker from free to minerals    " + GameState.time);
+                if (GameState.workers.get(Worker.FREE) > 0 && GameState.workers.get(Worker.MINERALS) < GameState.patches * 3) {
+                    reassignWorker(Worker.FREE, Worker.MINERALS);
                 }
                 break;
             }
 
             // "reassign worker from gas to minerals"
             case 2: {
-                if (GameState.workers.get("gas") > 0 && GameState.workers.get("minerals") < 24) {
-                    reassignWorker("gas", "minerals");
-                    decisionsMade.add( "reassign worker from gas to minerals    " + GameState.time);
+                if (GameState.workers.get(Worker.GAS) > 0 && GameState.workers.get(Worker.MINERALS) < GameState.patches * 3) {
+                    reassignWorker(Worker.GAS, Worker.MINERALS);
                 }
                 break;
             }
 
             // "reassign worker from minerals to gas"
             case 3: {
-                if (GameState.workers.get("minerals") > 0 && GameState.workers.get("gas") < 6) {
-                    reassignWorker("minerals", "gas");
-                    decisionsMade.add( "reassign worker from minerals to gas    " + GameState.time);
+                if (GameState.workers.get(Worker.MINERALS) > 0 
+                    && GameState.workers.get(Worker.GAS) < GameState.freeBuildings.get(Refinery.IDENT) * 3) {
+                    reassignWorker(Worker.MINERALS, Worker.GAS);
                 }
                 break;
             }
@@ -80,7 +78,7 @@ public class Decision {
                     GameState.updateBuildings(Hellion.builtFrom, "start");
                     GameState.gas -= Hellion.gasCost;
                     GameState.minerals -= Hellion.mineralCost;
-                    decisionsMade.add( "build hellion    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Hellion.IDENT);
                 }
                 break;
             }
@@ -94,7 +92,7 @@ public class Decision {
                     GameState.updateBuildings(Marine.builtFrom, "start");
                     GameState.gas -= Marine.gasCost;
                     GameState.minerals -= Marine.mineralCost;
-                    decisionsMade.add( "build marine    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Marine.IDENT);
                 }
                 break;
             }
@@ -108,7 +106,7 @@ public class Decision {
                     GameState.updateBuildings(Medivac.builtFrom, "start");
                     GameState.gas -= Medivac.gasCost;
                     GameState.minerals -= Medivac.mineralCost;
-                    decisionsMade.add( "build medivac    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Medivac.IDENT);
                 }
                 break;
             }
@@ -122,7 +120,7 @@ public class Decision {
                     GameState.updateBuildings(Viking.builtFrom, "start");
                     GameState.gas -= Viking.gasCost;
                     GameState.minerals -= Viking.mineralCost;
-                    decisionsMade.add( "build viking    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Viking.IDENT);
                 }
                 break;
             }
@@ -130,14 +128,15 @@ public class Decision {
             // "build worker"
             case 8: {
                 if (GameState.minerals >= 50 && GameState.freeBuildings.get(CommandCenter.IDENT) > 0
-                    && (GameState.workers.get("gas") < 6 || GameState.workers.get("minerals") < 24)) {
+                    && (GameState.workers.get("gas") < GameState.freeBuildings.get(Refinery.IDENT) * 3 
+                    || GameState.workers.get("minerals") < GameState.patches * 3)) {
                     ArrayList<Integer> durations = GameState.constructionsBeingBuilt.get(Worker.IDENT);
                     durations.add(Worker.buildTime);
                     GameState.constructionsBeingBuilt.put(Worker.IDENT, durations);
                     GameState.updateBuildings(Worker.builtFrom, "start");
                     GameState.gas -= Worker.gasCost;
                     GameState.minerals -= Worker.mineralCost;
-                    decisionsMade.add( "build worker    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Worker.IDENT);
                 }
                 break;
             }
@@ -150,7 +149,7 @@ public class Decision {
                     GameState.constructionsBeingBuilt.put(Barracks.IDENT, durations);
                     GameState.gas -= Barracks.gasCost;
                     GameState.minerals -= Barracks.mineralCost;
-                    decisionsMade.add( "build barracks    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Barracks.IDENT);
                 }
                 break;
             }
@@ -163,46 +162,49 @@ public class Decision {
                     GameState.constructionsBeingBuilt.put(CommandCenter.IDENT, durations);
                     GameState.gas -= CommandCenter.gasCost;
                     GameState.minerals -= CommandCenter.mineralCost;
-                    decisionsMade.add( "build command center    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + CommandCenter.IDENT);
                 }
                 break;
             }
 
             // "build factory"
             case 11: {
-                if (GameState.minerals >= 150 && GameState.gas >= 100 && (GameState.freeBuildings.get(Barracks.IDENT) > 0 || GameState.busyBuildings.get(Barracks.IDENT) > 0)) {
+                if (GameState.minerals >= 150 && GameState.gas >= 100 
+                    && (GameState.freeBuildings.get(Barracks.IDENT) > 0 || GameState.busyBuildings.get(Barracks.IDENT) > 0)) {
                     ArrayList<Integer> durations = GameState.constructionsBeingBuilt.get(Factory.IDENT);
                     durations.add(Factory.buildTime);
                     GameState.constructionsBeingBuilt.put(Factory.IDENT, durations);
                     GameState.gas -= Factory.gasCost;
                     GameState.minerals -= Factory.mineralCost;
-                    decisionsMade.add( "build factory    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Factory.IDENT);
                 }
                 break;
             }
 
             // "build refinery"
             case 12: {
-                if (GameState.minerals >= 75) {
+                if (GameState.minerals >= 75 
+                    && GameState.freeBuildings.get(Refinery.IDENT) + GameState.constructionsBeingBuilt.get(Refinery.IDENT).size() < GameState.geysers) {
                     ArrayList<Integer> durations = GameState.constructionsBeingBuilt.get(Refinery.IDENT);
                     durations.add(Refinery.buildTime);
                     GameState.constructionsBeingBuilt.put(Refinery.IDENT, durations);
                     GameState.gas -= Refinery.gasCost;
                     GameState.minerals -= Refinery.mineralCost;
-                    decisionsMade.add( "build refinery    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Refinery.IDENT);
                 }
                 break;
             }
 
             // "build starport"
             case 13: {
-                if (GameState.minerals >= 150 && GameState.gas >= 100 && (GameState.freeBuildings.get(Factory.IDENT) > 0 || GameState.busyBuildings.get(Factory.IDENT) > 0)) {
+                if (GameState.minerals >= 150 && GameState.gas >= 100 
+                    && (GameState.freeBuildings.get(Factory.IDENT) > 0 || GameState.busyBuildings.get(Factory.IDENT) > 0)) {
                     ArrayList<Integer> durations = GameState.constructionsBeingBuilt.get(Starport.IDENT);
                     durations.add(Starport.buildTime);
                     GameState.constructionsBeingBuilt.put(Starport.IDENT, durations);
                     GameState.gas -= Starport.gasCost;
                     GameState.minerals -= Starport.mineralCost;
-                    decisionsMade.add( "build starport    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + Starport.IDENT);
                 }
                 break;
             }
@@ -215,7 +217,7 @@ public class Decision {
                     GameState.constructionsBeingBuilt.put(SupplyDepot.IDENT, durations);
                     GameState.gas -= SupplyDepot.gasCost;
                     GameState.minerals -= SupplyDepot.mineralCost;
-                    decisionsMade.add( "build supply depot    " + GameState.time);
+                    decisionsMade.add(GameState.time + " start building " + SupplyDepot.IDENT);
                 }
                 break;
             }
@@ -233,5 +235,6 @@ public class Decision {
         GameState.workers.put(initialState, initialNumber);
         Integer finalNumber = GameState.workers.get(finalState) + 1;
         GameState.workers.put(finalState, finalNumber);
+        decisionsMade.add(GameState.time + " reassign " + Worker.IDENT + " from " + initialState + " to " + finalState);
     }
 }

@@ -1,7 +1,6 @@
 package constructions.buildings;
 
-import constructions.Construction;
-import java.util.*;
+import constructions.*;
 
 public class Building extends Construction {
 

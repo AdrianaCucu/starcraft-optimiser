@@ -12,5 +12,4 @@ public class Marine extends Unit {
     public static int buildTime = 25;
     public static String dependentOn = "";
     public static String builtFrom = Barracks.IDENT;
-
 }

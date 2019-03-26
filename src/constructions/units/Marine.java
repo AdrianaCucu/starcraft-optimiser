@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 public class Marine extends Unit {
 
-    public static int score = 0;
-
     public static final String IDENT = "marine";
 
     public static double mineralCost = 50;
@@ -16,9 +14,4 @@ public class Marine extends Unit {
     public static int buildTime = 25;
     public static ArrayList<String> dependentOn = new ArrayList<>();
     public static String builtFrom = Barracks.IDENT;
-
-    public static void setScore(int number) {
-        score = number;
-        Barracks.setScore(number);
-    }
 }

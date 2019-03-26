@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 public class Worker extends Unit {
 
-    public static int score = 0;
-
     public static final String IDENT = "worker";
 
     public static final String FREE = "free";
@@ -19,9 +17,4 @@ public class Worker extends Unit {
     public static final int buildTime = 17;
     public static ArrayList<String> dependentOn = new ArrayList<>();
     public static final String builtFrom = CommandCenter.IDENT;
-
-    public static void setScore(int number) {
-        score = number;
-        CommandCenter.setScore(number);
-    }
 }

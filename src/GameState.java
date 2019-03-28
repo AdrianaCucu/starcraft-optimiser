@@ -158,7 +158,7 @@ public class GameState {
             freeBuildings.put(key, number);
         }
 
-        Decision.decisionsMade.add(time + " finished building " + key);
+        Decision.decisionsMade.add(Decision.formatDecision("finished building " + key));
     }
 
     private static void updateConstructionsBeingBuilt() {

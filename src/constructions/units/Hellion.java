@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Hellion extends Unit{
 
     public static final String IDENT = "hellion";
+    public static final int INDEX = 1;
 
     public static double mineralCost = 50;
     public static double gasCost = 0;

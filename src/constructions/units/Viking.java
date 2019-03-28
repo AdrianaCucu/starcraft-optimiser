@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Viking extends Unit {
 
     public static final String IDENT = "viking";
+    public static final int INDEX = 3;
 
     public static double mineralCost = 150;
     public static double gasCost = 75;

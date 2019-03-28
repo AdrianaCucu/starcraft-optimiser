@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Medivac extends Unit{
 
     public static final String IDENT = "medivac";
+    public static final int INDEX = 2;
 
     public static double mineralCost = 100;
     public static double gasCost = 100;

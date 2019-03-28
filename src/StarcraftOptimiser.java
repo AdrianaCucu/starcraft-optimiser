@@ -13,38 +13,36 @@ public class StarcraftOptimiser {
             Decision.makeDecision();
         }
 
-        // prints out the decisions
+        /**
+         * Prints the decisions using a lambda expression.
+         * 
+         * http://www.codenuclear.com/print-arraylist-using-lambda-expression-in-java-8/
+         */
+        Decision.decisionsMade.forEach(System.out::print);
+        /*
         for (String decision : Decision.decisionsMade) {
             System.out.println(decision);
         }
+        */
 
 
         // following for loops are for testing
         // that the necessary constructions are built
         System.out.println();
         System.out.println("Units:");
-        for (Map.Entry<String, Integer> entry : GameState.units.entrySet()) {
-            System.out.println(entry.getValue() + " " + entry.getKey());
-        }
+        GameState.units.forEach((key, value) -> System.out.println(key + ": " + value));
 
         System.out.println();
         System.out.println("Workers:");
-        for (Map.Entry<String, Integer> entry : GameState.workers.entrySet()) {
-            System.out.println(entry.getValue() + " " + entry.getKey());
-        }
+        GameState.workers.forEach((key, value) -> System.out.println(key + ": " + value));
 
         System.out.println();
         System.out.println("Free buildings:");
-        for (Map.Entry<String, Integer> entry : GameState.freeBuildings.entrySet()) {
-            System.out.println(entry.getValue() + " " + entry.getKey());
-        }
-
+        GameState.freeBuildings.forEach((key, value) -> System.out.println(key + ": " + value));
 
         System.out.println();
         System.out.println("Busy buildings:");
-        for (Map.Entry<String, Integer> entry : GameState.busyBuildings.entrySet()) {
-            System.out.println(entry.getValue() + " " + entry.getKey());
-        }
+        GameState.busyBuildings.forEach((key, value) -> System.out.println(key + ": " + value));
 
         System.out.println();
         System.out.println("Total time: " + GameState.time);

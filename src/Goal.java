@@ -54,7 +54,7 @@ public class Goal {
             // element is only made up of characters with a possible "," at the end
             if (element.matches("^[a-zA-Z]+,?$")) {
 
-                element = element.replaceAll(",", "");
+                element = element.replaceAll(",", "").toLowerCase();
 
                 if (element.equals(Marine.IDENT) || element.equals(Hellion.IDENT) 
                     || element.equals(Medivac.IDENT) || element.equals(Viking.IDENT)) {

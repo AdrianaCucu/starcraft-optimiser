@@ -18,7 +18,7 @@ public class StarcraftOptimiser {
          * 
          * http://www.codenuclear.com/print-arraylist-using-lambda-expression-in-java-8/
          */
-        Decision.decisionsMade.forEach(System.out::print);
+        Decision.decisionsMade.forEach(System.out::println);
         /*
         for (String decision : Decision.decisionsMade) {
             System.out.println(decision);

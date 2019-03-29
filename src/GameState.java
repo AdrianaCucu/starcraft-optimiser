@@ -136,7 +136,7 @@ public class GameState {
             minerals += workers.get(Worker.MINERALS) * (41.0 / 60);
         } else {
             minerals += patches * 2 * (41.0/60) + (workers.get(Worker.MINERALS) - patches * 2) * (20.0 / 60);
-        }
+        };
         gas += workers.get(Worker.GAS) * (38.0 / 60);
     }
 

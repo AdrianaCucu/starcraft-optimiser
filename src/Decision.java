@@ -17,6 +17,7 @@ public class Decision {
     // names of the units and indices of the decisions that are valuable for the goal
     public static HashMap<String, Integer> possibleDecisions = new HashMap<>();
 
+
     public static void makeDecision() {
 
         // updates the resources and checks if the goal has been met
@@ -65,8 +66,21 @@ public class Decision {
 
                 if (!decisionMade) {
 
-                    // first 3 cases are relevant to a marine
-                    randomDecision(3);
+                    boolean needGas = false;
+
+                    for (String unit: possibleDecisions.keySet()) {
+                        if (unit.equals(Hellion.IDENT) || unit.equals(Medivac.IDENT) || unit.equals(Viking.IDENT)) {
+                            needGas = true;
+                        }
+                    }
+
+                    if (needGas) {
+                        randomDecision(5);
+
+                    } else {
+                        // first 3 cases are relevant to a marine
+                        randomDecision(3);
+                    }
                 } 
                 break;
             }
@@ -78,16 +92,8 @@ public class Decision {
 
                 if (!decisionMade) {
 
-                    if (GameState.freeBuildings.get(Factory.IDENT) == 0) {
-
-                        // need gas to build a factory
-                        randomDecision(5);
-                    } else {
-
-                        // first 3 cases are relevant to a hellion
-                        randomDecision(3);
-                    }
-
+                   // first 5 cases are relevant to a hellion
+                   randomDecision(5);
                 }
                 break;
             }
@@ -123,30 +129,18 @@ public class Decision {
 
     private static void randomDecision(int number) {
 
-            int i;
-        
-            if (GameState.workers.get(Worker.FREE) > 0) {
-
-                i = random.nextInt(2);
-
-                switch (i) {
-
-                    case 0: {
-                        if (number == 5 && GameState.workers.get(Worker.FREE) > 0 
-                            && GameState.workers.get(Worker.GAS) < GameState.freeBuildings.get(Refinery.IDENT) * 3) {
-                            reassignWorker(Worker.FREE, Worker.GAS);
-                        }
-                    }
-
-                    case 1: {
-                        if (GameState.workers.get(Worker.FREE) > 0 && GameState.workers.get(Worker.MINERALS) < GameState.patches * 3) {
-                            reassignWorker(Worker.FREE, Worker.MINERALS);
-                        }
-                    }
-                }
+            if (number == 5 && GameState.workers.get(Worker.FREE) > 0 
+                && GameState.workers.get(Worker.GAS) < GameState.freeBuildings.get(Refinery.IDENT) * 3
+                && GameState.gas <= GameState.minerals) {
+                reassignWorker(Worker.FREE, Worker.GAS);
+            } 
+            
+            else if (GameState.workers.get(Worker.FREE) > 0 
+                && GameState.workers.get(Worker.MINERALS) < GameState.patches * 3) {
+                reassignWorker(Worker.FREE, Worker.MINERALS);
             }
 
-            i = random.nextInt(number);
+            int i = random.nextInt(number);
 
             switch (i) {
 
@@ -161,13 +155,29 @@ public class Decision {
                 // "build worker"
                 case 1: {
                     if (GameState.workers.get(Worker.FREE) + GameState.workers.get(Worker.MINERALS) < GameState.patches * 3) {
-                        buildWorker();
+
+                        boolean build = true;
+
+                        // for each uit that is still valuable for the goal
+                        // checks if any of them are going to be finished building soon
+                        // so that instead of building a worker, it waits and builds something more valuable
+                        for (String unit: possibleDecisions.keySet()) {
+                            for (Integer seconds: GameState.constructionsBeingBuilt.get(unit)) {
+                                if (seconds < Worker.buildTime) {
+                                    build = false;
+                                }
+                            }
+                        }
+
+                        if (build) {
+                            buildWorker();
+                        }
                     }
                     break;
                 }
 
-                 // "build command center"
-                 case 2: {
+                // "build command center"
+                case 2: {
                     buildCommandCenter();
                     break;
                 }
@@ -391,7 +401,7 @@ public class Decision {
      */
     public static String formatDecision(String decision) {
 
-        String output =  "\n" + String.format("%-5.5s", GameState.time)
+        String output = String.format("%-5.5s", GameState.time)
                         + String.format("%-45.45s", decision) 
                         + String.format("%-12.12s", " gas: " + Math.round(GameState.gas))
                         + String.format("%-17.17s", " minerals: " + Math.round(GameState.minerals));

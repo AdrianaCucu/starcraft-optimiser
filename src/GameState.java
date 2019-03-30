@@ -12,32 +12,43 @@ public class GameState {
     public static final int geysers = 2;
     public static final int patches = 8;
 
-    // the goal that needs to be met
+    /**
+     * The goal that needs to be met.
+     * Stored as the identifier of the unit and the number required for each type of unit.
+     */
     public static HashMap<String, Integer> goal = new HashMap<>();
 
-    // buildings and units that are in the process of being built
-    // the array list of integers stores the number of seconds remaining
-    // for each instance of the construction
-    // (if we have multiple instances of the same kind being built at the same time)
+    /**
+     * Stores the buildings and units that are in the process of being built.
+     * The ArrayList stores the numbers of seconds remaining for each instance of the construction.
+     */
     public static HashMap<String, ArrayList<Integer>> constructionsBeingBuilt = new HashMap<>();
 
-
-    // identifiers of buildings and number of free buildings for each
+    /**
+     * The buildings that are not busy building a unit.
+     */
     public static HashMap<String, Integer> freeBuildings = new HashMap<>();
 
-    // identifiers of buildings and number of busy buildings for each
-    // no need to store what the building is building, because we only need the numbers
+    /**
+     * The buildings that are in the process of building a unit.
+     */
     public static HashMap<String, Integer> busyBuildings = new HashMap<>();
 
-    // units without workers
+    /**
+     * The units that were already created (excluding workers).
+     */
     public static HashMap<String, Integer> units = new HashMap<>();
 
-    // the String is what they are assigned to
-    // "free" / "gas" / "minerals"
+    /**
+     * The workers that were already created.
+     * Stored based on the action they are performing (collecting gas, collecting minerals, and nothing).
+     */
     public static HashMap<String, Integer> workers = new HashMap<>();
 
 
-    // initial state of the game in terms of buildings, units, and time
+    /**
+     * The initial state of the game in terms of buildings and units.
+     */
     public static void initialiseGame() {
 
         constructionsBeingBuilt.put(Barracks.IDENT, new ArrayList<Integer>());
@@ -76,114 +87,132 @@ public class GameState {
         workers.put(Worker.MINERALS, 0);
     }
 
+    /**
+     * Updates the buildings when a unit is finished being built.
+     * 
+     * @param builtFrom - the building that builds the unit
+     */
+    private static void finishedBuildingUnit(String builtFrom) {
+        busyBuildings.put(builtFrom, busyBuildings.get(builtFrom) - 1);
+        freeBuildings.put(builtFrom, freeBuildings.get(builtFrom) + 1);
+    }
+
+    /**
+     * Updates the buildings based on whether they are starting or finishing building a unit.
+     * 
+     * @param key - the unit
+     * @param action - "start" or "finish"
+     */
     public static void updateBuildings (String key, String action) {
         if (action.equals("start")) {
-            Integer busyNumber = busyBuildings.get(key) + 1;
-            busyBuildings.put(key, busyNumber);
-            Integer freeNumber = freeBuildings.get(key) - 1;
-            freeBuildings.put(key, freeNumber);
+            busyBuildings.put(key, busyBuildings.get(key) + 1);
+            freeBuildings.put(key, freeBuildings.get(key) - 1);
         }
         else if (action.equals("finish")) {
             switch (key) {
                 case Hellion.IDENT: {
-                    Integer busyNumber = busyBuildings.get(Hellion.builtFrom) - 1;
-                    busyBuildings.put(Hellion.builtFrom, busyNumber);
-                    Integer freeNumber = freeBuildings.get(Hellion.builtFrom) + 1;
-                    freeBuildings.put(Hellion.builtFrom, freeNumber);
+                    finishedBuildingUnit(Hellion.builtFrom);
                     break;
                 }
                 case Marine.IDENT: {
-                    Integer busyNumber = busyBuildings.get(Marine.builtFrom) - 1;
-                    busyBuildings.put(Marine.builtFrom, busyNumber);
-                    Integer freeNumber = freeBuildings.get(Marine.builtFrom) + 1;
-                    freeBuildings.put(Marine.builtFrom, freeNumber);
+                    finishedBuildingUnit(Marine.builtFrom);
                     break;
                 }
                 case Medivac.IDENT: {
-                    Integer busyNumber = busyBuildings.get(Medivac.builtFrom) - 1;
-                    busyBuildings.put(Medivac.builtFrom, busyNumber);
-                    Integer freeNumber = freeBuildings.get(Medivac.builtFrom) + 1;
-                    freeBuildings.put(Medivac.builtFrom, freeNumber);
+                    finishedBuildingUnit(Medivac.builtFrom);
                     break;
                 }
                 case Viking.IDENT: {
-                    Integer busyNumber = busyBuildings.get(Viking.builtFrom) - 1;
-                    busyBuildings.put(Viking.builtFrom, busyNumber);
-                    Integer freeNumber = freeBuildings.get(Viking.builtFrom) + 1;
-                    freeBuildings.put(Viking.builtFrom, freeNumber);
+                    finishedBuildingUnit(Viking.builtFrom);
                     break;
                 }
                 case Worker.IDENT: {
-                    Integer busyNumber = busyBuildings.get(Worker.builtFrom) - 1;
-                    busyBuildings.put(Worker.builtFrom, busyNumber);
-                    Integer freeNumber = freeBuildings.get(Worker.builtFrom) + 1;
-                    freeBuildings.put(Worker.builtFrom, freeNumber);
+                    finishedBuildingUnit(Worker.builtFrom);
                     break;
                 }
             }
         }
     }
 
-    // updating resources each second
-    // when updating resources, we assume workers are assigned
-    // in the most efficient way within a collecting place
-    // e.g.: if we have 4 workers on mineral patches,
-    // we will have 2 and 2 on different ones to maximise profit
-    // 41 minerals / minute or 20 minerals / minute
-    // 38 gas / minute
+    /**
+     * Updates the resources at each second of the game.
+     * Resources are collected in the most efficient way possible for the current configuration.
+     * e.g.: If we have 4 workers on mineral patches, we will have 2 and 2 on different ones to maximise collection.
+     */
     private static void updateResources() {
+
+        /**
+         * 41 minerals / minute or 20 minerals / minute
+         */
         if (workers.get(Worker.MINERALS) <= patches * 2) {
             minerals += workers.get(Worker.MINERALS) * (41.0 / 60);
         } else {
             minerals += patches * 2 * (41.0/60) + (workers.get(Worker.MINERALS) - patches * 2) * (20.0 / 60);
-        };
+        }
+
+        /**
+         * 38 gas / minute
+         */
         gas += workers.get(Worker.GAS) * (38.0 / 60);
     }
 
+    /**
+     * Updates the constructions that were finished being built.
+     * 
+     * @param key - the idetifier of the construction
+     */
     private static void updateCompletedConstructions(String key) {
         if (key.equals(Hellion.IDENT) || key.equals(Marine.IDENT) || key.equals(Medivac.IDENT) || key.equals(Viking.IDENT)) {
-            Integer number = units.get(key) + 1;
-            units.put(key, number);
+            units.put(key, units.get(key) + 1);
             updateBuildings(key, "finish");
         }
 
         else if (key.equals(Worker.IDENT)) {
-            Integer number = workers.get(Worker.FREE) + 1;
-            workers.put(Worker.FREE, number);
+            workers.put(Worker.FREE, workers.get(Worker.FREE) + 1);
             updateBuildings(Worker.IDENT, "finish");
         }
 
         else {
-            Integer number = freeBuildings.get(key) + 1;
-            freeBuildings.put(key, number);
+            freeBuildings.put(key, freeBuildings.get(key) + 1);
         }
-
-        Decision.decisionsMade.add(Decision.formatDecision("finished building " + key));
     }
 
+    /**
+     * Updates the constructions that are in the process of being built.
+     */
     private static void updateConstructionsBeingBuilt() {
 
         if (constructionsBeingBuilt.size() != 0) {
 
-            // iterates through each key (construction identifier) in the map
+            /**
+             * Iterates through all constructions in the map.
+             */
             for (String key : constructionsBeingBuilt.keySet()) {
                 
+                /**
+                 * The remaining times before being updated.
+                 */
                 ArrayList<Integer> durations = constructionsBeingBuilt.get(key);
 
-                // iterates through each duration for the specific construction
-                // if it is 1, adds a new construction to its specific map
-                // (because next second will be 0, so it will be finished)
-                // if it is different to 1, it subtracts a second to update the duration
-                for (int i = 0; i < durations.size(); i++) {
-                    if (durations.get(i) == 1) {
+                /**
+                 * Stores the updated times remaining for the constructions in the process of being built.
+                 */
+                ArrayList<Integer> newDurations = new ArrayList<>();
+
+                /**
+                 * Iterates through the remaining durations for each construction.
+                 * If it is 1, the construction will be completed, and the game state is updated accordingly.
+                 * Otherwise, the updated times are added to newDurations and the HashMap is updated.
+                 */
+                for (int duration: durations) {
+                    if (duration == 1) {
                         updateCompletedConstructions(key);
                     }
                     else {
-                        durations.add(durations.get(i) - 1);
+                        newDurations.add(duration - 1);
                     }
-                    durations.remove(durations.get(i));
                 }
-                constructionsBeingBuilt.put(key, durations);
+                constructionsBeingBuilt.put(key, newDurations);
             }
         }
     }
@@ -193,21 +222,20 @@ public class GameState {
      */
     private static boolean goalMet() {
         for (String key : goal.keySet()) {
-            if (key.equals(Worker.IDENT) 
-                && ((workers.get(Worker.FREE) + workers.get(Worker.GAS) + workers.get(Worker.MINERALS)) < goal.get(key))) {
-                return false;
-            }
-            else if (!key.equals(Worker.IDENT) && (units.get(key) < goal.get(key))){
+            if (units.get(key) < goal.get(key)){
                 return false;
             }
         }
         return true;
     }
 
+    /**
+     * Updates the game state after every second.
+     * The time is not updated here, because it is increased after decisions are being made, not before.
+     */
     public static void updateGameState () {
         updateResources();
         updateConstructionsBeingBuilt();
-
         Goal.goalAchieved = goalMet();
     }
 }

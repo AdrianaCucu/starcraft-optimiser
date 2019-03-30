@@ -1,21 +1,21 @@
 import java.util.*;
 
-import javax.lang.model.element.Element;
-
 import java.text.ParseException;
 
 import constructions.units.*;
 
 public class Goal {
 
-    private static Scanner sc;
-    private static String element;
     private static HashMap<String, Integer> goal = new HashMap<>();
 
     public static boolean goalAchieved = false;
 
-    // goals are given as:
-    // "16 Marines, 8 Hellions, 3 Medivacs"
+    /**
+     * Sets the goal. The goal needs o be passed as "<goal>".
+     * 
+     * @param args - the goal
+     * @return - the goal represented by a HashMap
+     */
     public static HashMap<String, Integer> setGoal(String[] args) {
 
         goal.put(Marine.IDENT, 0);
@@ -33,16 +33,24 @@ public class Goal {
         return goal;
     }
 
+    /**
+     * Parses the goals and sets the posiible decisions that are relevant for the goal.
+     * 
+     * @param input - the goal
+     */
     public static void parseGoal(String input) {
 
-        int num = 0;
-        String construction;
+        Scanner sc = new Scanner(input);
 
-        sc = new Scanner(input);
         while (sc.hasNext()) {
-            element = sc.next();
 
-            //checks that every character is a number
+            String element = sc.next();
+            int num = 0;
+
+            /**
+             * Checks that every character is a digit.
+             * If number starts with "0", it does not pick it up as an error.
+             */
             if (element.matches("^[0-9]+$")) {
                num = Integer.parseInt(element);
             } else {
@@ -50,35 +58,38 @@ public class Goal {
             }
 
             element = sc.next();
-            
-            // element is only made up of characters with a possible "," at the end
+
+            /**
+             * Checks that every character is a letter with a possible "," at the end.
+             */
             if (element.matches("^[a-zA-Z]+,?$")) {
 
+                /**
+                 * Removes the commas in order to validate the String.
+                 */
                 element = element.replaceAll(",", "");
 
+                /**
+                 * Turns the plural words into singular words in order to validate the String.
+                 */
+                if (element.endsWith("s")) {
+                    element = element.substring(0, element.length() - 1);
+                }
+
+                /**
+                 * Validates the String and sets the goals.
+                 */
                 if (element.equals(Marine.IDENT) || element.equals(Hellion.IDENT) 
                     || element.equals(Medivac.IDENT) || element.equals(Viking.IDENT)) {
 
-                        // if multiple goals are entered for the same unit, sets the biggest one
-                        // doesn't pick it up as an error
-                        if (num > goal.get(element)) {
-                            goal.put(element, num);
-                        }
+                    /**
+                     * If multiple goals are entered for the same unit, the biggest one is considered.
+                     */
+                    if (num > goal.get(element)) {
+                        goal.put(element, num);
+                    }
 
-                        Decision.possibleDecisions.put(element, getIndex(element));
-                }
-
-                else if (element.equals(Marine.IDENT + "s") || element.equals(Hellion.IDENT + "s") 
-                    || element.equals(Medivac.IDENT + "s") || element.equals(Viking.IDENT + "s")){
-
-                        String singular = element.substring(0, element.length() - 1);
-
-                        // removes the "s" from the end
-                        if (num > goal.get(singular)) {
-                            goal.put(singular, num);
-                        }
-
-                        Decision.possibleDecisions.put(singular, getIndex(singular));
+                    Decision.possibleDecisions.put(element, getIndex(element));
                 }
 
                 else {
@@ -86,9 +97,15 @@ public class Goal {
                 }
             }
         }
-       //System.out.println(goal.entrySet());
+        sc.close();
     }
 
+    /**
+     * Returns the index of the unit.
+     * 
+     * @param element - 
+     * @return
+     */
     private static int getIndex(String element) {
 
         switch (element) {
@@ -108,6 +125,9 @@ public class Goal {
         }
     }
 
+    /**
+     * If the input is not valid, prints an informative error message.
+     */
     private static void handleSyntaxError(String element) {
         System.out.println("Invalid goal entered. Error found near '" + element + "'.");
         System.exit(1);

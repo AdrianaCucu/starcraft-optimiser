@@ -2,6 +2,6 @@ package constructions.buildings;
 
 import constructions.*;
 
-public class Building extends Construction {
+public class DelayBuilding extends DelayConstruction {
 
 }

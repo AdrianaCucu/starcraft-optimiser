@@ -1,6 +1,3 @@
-import java.util.HashSet;
-import java.util.Map;
-
 public class StarcraftOptimiser {
     public static void main(String[] args) {
 

@@ -20,6 +20,10 @@ public class IntermediateGoal {
         goal.put(IntermediateHellion.IDENT, 0);
         goal.put(IntermediateMedivac.IDENT, 0);
         goal.put(IntermediateViking.IDENT, 0);
+        goal.put(IntermediateBanshee.IDENT, 0);
+        goal.put(IntermediateMarauder.IDENT, 0);
+        goal.put(IntermediateTank.IDENT, 0);
+        goal.put(IntermediateThor.IDENT, 0);
 
         if (args.length == 1) {
             parseIntermediateGoal(args[0]);
@@ -55,6 +59,13 @@ public class IntermediateGoal {
                handleSyntaxError(element);
             }
 
+            /**
+             * If not enough arguments have been entered, the program is stopped.
+             */
+            if (!sc.hasNext()) {
+                handleSyntaxError(element);
+            }
+
             element = sc.next();
 
             /**
@@ -78,7 +89,9 @@ public class IntermediateGoal {
                  * Validates the String and sets the goals.
                  */
                 if (element.equals(IntermediateMarine.IDENT) || element.equals(IntermediateHellion.IDENT)
-                    || element.equals(IntermediateMedivac.IDENT) || element.equals(IntermediateViking.IDENT)) {
+                        || element.equals(IntermediateMedivac.IDENT) || element.equals(IntermediateViking.IDENT)
+                        || element.equals(IntermediateBanshee.IDENT) || element.equals(IntermediateMarauder.IDENT)
+                        || element.equals(IntermediateTank.IDENT) || element.equals(IntermediateThor.IDENT)) {
 
                     /**
                      * If multiple goals are entered for the same unit, picks it up as an error.
@@ -86,8 +99,7 @@ public class IntermediateGoal {
                     if (goal.get(element) == 0 && num > 0) {
                         goal.put(element, num);
                     } else {
-                        System.out.println("Invalid goal.");
-                        System.exit(1);
+                        handleSyntaxError(element);
                     }
 
                     IntermediateDecision.possibleIntermediateDecisions.put(element, getIndex(element));
@@ -126,8 +138,20 @@ public class IntermediateGoal {
             case IntermediateMedivac.IDENT: {
                 return IntermediateMedivac.INDEX;
             }
-            default: {
+            case IntermediateViking.IDENT: {
                 return IntermediateViking.INDEX;
+            }
+            case IntermediateBanshee.IDENT: {
+                return IntermediateBanshee.INDEX;
+            }
+            case IntermediateMarauder.IDENT: {
+                return IntermediateMarauder.INDEX;
+            }
+            case IntermediateTank.IDENT: {
+                return IntermediateTank.INDEX;
+            }
+            default: {
+                return IntermediateThor.INDEX;
             }
         }
     }
@@ -154,8 +178,25 @@ public class IntermediateGoal {
                 IntermediateGameState.goalSupply += IntermediateMedivac.supplyNeeded * num;
                 break;
             }
-            default: {
+            case IntermediateViking.IDENT: {
                 IntermediateGameState.goalSupply += IntermediateViking.supplyNeeded * num;
+                break;
+            }
+            case IntermediateBanshee.IDENT: {
+                IntermediateGameState.goalSupply += IntermediateBanshee.supplyNeeded * num;
+                break;
+            }
+            case IntermediateMarauder.IDENT: {
+                IntermediateGameState.goalSupply += IntermediateMarauder.supplyNeeded * num;
+                break;
+            }
+            case IntermediateTank.IDENT: {
+                IntermediateGameState.goalSupply += IntermediateTank.supplyNeeded * num;
+                break;
+            }
+            case IntermediateThor.IDENT: {
+                IntermediateGameState.goalSupply += IntermediateThor.supplyNeeded * num;
+                break;
             }
         }
     }

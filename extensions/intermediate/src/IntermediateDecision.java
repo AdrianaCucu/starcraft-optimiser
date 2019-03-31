@@ -172,6 +172,66 @@ public class IntermediateDecision {
                 if (!decisionMade) randomIntermediateDecision(6);
                 break;
             }
+
+            // "build banshee"
+            case IntermediateBanshee.INDEX: {
+
+                /**
+                 * Tries to build a Banshee, or (if not possible) a building relevant to Banshees.
+                 */
+                buildIntermediateBanshee();
+
+                /**
+                 * If it is not possible to build a Banshee, makes a decision to improve the resources.
+                 */
+                if (!decisionMade) randomIntermediateDecision(6);
+                break;
+            }
+
+            // "build marauder"
+            case IntermediateMarauder.INDEX: {
+
+                /**
+                 * Tries to build a Marauder, or (if not possible) a building relevant to Marauders.
+                 */
+                buildIntermediateMarauder();
+
+                /**
+                 * If it is not possible to build a Marauder, makes a decision to improve the resources.
+                 */
+                if (!decisionMade) randomIntermediateDecision(6);
+                break;
+            }
+
+            // "build thor"
+            case IntermediateThor.INDEX: {
+
+                /**
+                 * Tries to build a Thor, or (if not possible) a building relevant to Thors.
+                 */
+                buildIntermediateThor();
+
+                /**
+                 * If it is not possible to build a Thor, makes a decision to improve the resources.
+                 */
+                if (!decisionMade) randomIntermediateDecision(6);
+                break;
+            }
+
+            // "build tank"
+            case IntermediateTank.INDEX: {
+
+                /**
+                 * Tries to build a Tank, or (if not possible) a building relevant to Tanks.
+                 */
+                buildIntermediateTank();
+
+                /**
+                 * If it is not possible to build a Tank, makes a decision to improve the resources.
+                 */
+                if (!decisionMade) randomIntermediateDecision(6);
+                break;
+            }
         }
     }
         
@@ -206,8 +266,20 @@ public class IntermediateDecision {
          */
         switch (i) {
 
-            // "reassign worker from gas to minerals"
+            // "build command center"
             case 0: {
+                buildIntermediateCommandCenter();
+                break;
+            }
+
+            // "build supply depot"
+            case 1: {
+                buildIntermediateSupplyDepot();
+                break;
+            }
+
+            // "reassign worker from gas to minerals"
+            case 2: {
                 if (IntermediateGameState.workers.get(IntermediateWorker.GAS) > 0 && IntermediateGameState.workers.get(IntermediateWorker.MINERALS) < IntermediateGameState.patches * 3) {
                     reassignIntermediateWorker(IntermediateWorker.GAS, IntermediateWorker.MINERALS);
                 }
@@ -215,7 +287,7 @@ public class IntermediateDecision {
             }
 
             // "build worker"
-            case 1: {
+            case 3: {
                 if (IntermediateGameState.workers.get(IntermediateWorker.FREE) + IntermediateGameState.workers.get(IntermediateWorker.MINERALS) < IntermediateGameState.patches * 3) {
 
                     boolean build = true;
@@ -238,18 +310,6 @@ public class IntermediateDecision {
                         buildIntermediateWorker();
                     }
                 }
-                break;
-            }
-
-            // "build command center"
-            case 2: {
-                buildIntermediateCommandCenter();
-                break;
-            }
-
-            // "build supply depot"
-            case 3: {
-                buildIntermediateSupplyDepot();
                 break;
             }
 
@@ -358,6 +418,106 @@ public class IntermediateDecision {
         }
     }
 
+    private static void buildIntermediateBanshee() {
+
+        /**
+         * If a free IntermediateStarport exists and there are enough resources, a Banshee can be built.
+         */
+        if (IntermediateGameState.freeIntermediateBuildings.get(IntermediateStarport.IDENT) > 0) {
+            if (IntermediateGameState.minerals >= IntermediateBanshee.mineralCost && IntermediateGameState.gas >= IntermediateBanshee.gasCost) {
+                buildIntermediateUnit(IntermediateBanshee.IDENT, IntermediateBanshee.builtFrom,
+                        IntermediateBanshee.buildTime, IntermediateBanshee.mineralCost, IntermediateBanshee.gasCost, IntermediateBanshee.supplyNeeded);
+            }
+        }
+
+        /**
+         * If a free IntermediateStarport does not exist, tries to build one.
+         * This happens when there is no IntermediateStarport that is busy or that is being built.
+         */
+        else if (IntermediateGameState.constructionsBeingBuilt.get(IntermediateStarport.IDENT).size() == 0
+                || IntermediateGameState.busyIntermediateBuildings.get(IntermediateStarport.IDENT) == 0) {
+            buildIntermediateStarport();
+        }
+    }
+
+    private static void buildIntermediateMarauder() {
+
+        /**
+         * If a free IntermediateBarracks exists and there are enough resources, a Marauder can be built.
+         */
+        if (IntermediateGameState.freeIntermediateBuildings.get(IntermediateBarracks.IDENT) > 0) {
+            if (IntermediateGameState.minerals >= IntermediateMarauder.mineralCost && IntermediateGameState.gas >= IntermediateMarauder.gasCost) {
+                buildIntermediateUnit(IntermediateMarauder.IDENT, IntermediateMarauder.builtFrom,
+                        IntermediateMarauder.buildTime, IntermediateMarauder.mineralCost, IntermediateMarauder.gasCost, IntermediateMarauder.supplyNeeded);
+            }
+        }
+
+        /**
+         * If a free IntermediateBarracks does not exist, tries to build one.
+         * This happens when there is no IntermediateBarracks that is busy or that is being built.
+         */
+        else if (IntermediateGameState.constructionsBeingBuilt.get(IntermediateBarracks.IDENT).size() == 0
+                || IntermediateGameState.busyIntermediateBuildings.get(IntermediateBarracks.IDENT) == 0) {
+            buildIntermediateBarracks();
+        }
+    }
+
+    private static void buildIntermediateThor() {
+
+        /**
+         * If a free IntermediateFactory exists and there are enough resources, a Thor can be built.
+         */
+        if (IntermediateGameState.freeIntermediateBuildings.get(IntermediateFactory.IDENT) > 0) {
+
+            /**
+             * A Thor is dependent on an Armory.
+             */
+            if (IntermediateGameState.freeIntermediateBuildings.get(IntermediateArmory.IDENT)
+                + IntermediateGameState.busyIntermediateBuildings.get(IntermediateArmory.IDENT) > 0) {
+
+                if (IntermediateGameState.minerals >= IntermediateThor.mineralCost && IntermediateGameState.gas >= IntermediateThor.gasCost) {
+                    buildIntermediateUnit(IntermediateThor.IDENT, IntermediateThor.builtFrom,
+                            IntermediateThor.buildTime, IntermediateThor.mineralCost, IntermediateThor.gasCost, IntermediateThor.supplyNeeded);
+                }
+            }
+
+            else if (IntermediateGameState.constructionsBeingBuilt.get(IntermediateArmory.IDENT).size() == 0) {
+                buildIntermediateArmory();
+            }
+        }
+
+        /**
+         * If a free IntermediateFactory does not exist, tries to build one.
+         * This happens when there is no IntermediateFactory that is busy or that is being built.
+         */
+        else if (IntermediateGameState.constructionsBeingBuilt.get(IntermediateFactory.IDENT).size() == 0
+                || IntermediateGameState.busyIntermediateBuildings.get(IntermediateFactory.IDENT) == 0) {
+            buildIntermediateFactory();
+        }
+    }
+
+    private static void buildIntermediateTank() {
+
+        /**
+         * If a free IntermediateFactory exists and there are enough resources, a Tank can be built.
+         */
+        if (IntermediateGameState.freeIntermediateBuildings.get(IntermediateFactory.IDENT) > 0) {
+            if (IntermediateGameState.minerals >= IntermediateTank.mineralCost && IntermediateGameState.gas >= IntermediateTank.gasCost) {
+                buildIntermediateUnit(IntermediateTank.IDENT, IntermediateTank.builtFrom,
+                        IntermediateTank.buildTime, IntermediateTank.mineralCost, IntermediateTank.gasCost, IntermediateTank.supplyNeeded);
+            }
+        }
+
+        /**
+         * If a free IntermediateFactory does not exist, tries to build one.
+         * This happens when there is no IntermediateFactory that is busy or that is being built.
+         */
+        else if (IntermediateGameState.constructionsBeingBuilt.get(IntermediateFactory.IDENT).size() == 0
+                || IntermediateGameState.busyIntermediateBuildings.get(IntermediateFactory.IDENT) == 0) {
+            buildIntermediateFactory();
+        }
+    }
+
     private static void buildIntermediateWorker() {
 
         /**
@@ -399,7 +559,6 @@ public class IntermediateDecision {
          * If supply is needed, builds a Command Center.
          */
         if (IntermediateGameState.minerals >= IntermediateCommandCenter.mineralCost && IntermediateGameState.gas >= IntermediateCommandCenter.gasCost
-                && IntermediateGameState.supply - IntermediateGameState.supplyUsed == 0
                 && IntermediateGameState.constructionsBeingBuilt.get(IntermediateCommandCenter.IDENT).size() == 0) {
 
             buildIntermediateBuilding(IntermediateCommandCenter.IDENT, IntermediateCommandCenter.buildTime,
@@ -435,7 +594,6 @@ public class IntermediateDecision {
          * If supply is needed, builds a Supply Depot if one is not already in the process of being built.
          */
         if (IntermediateGameState.minerals >= IntermediateSupplyDepot.mineralCost && IntermediateGameState.gas >= IntermediateSupplyDepot.gasCost
-                && IntermediateGameState.supply - IntermediateGameState.supplyUsed == 0
                 && IntermediateGameState.constructionsBeingBuilt.get(IntermediateSupplyDepot.IDENT).size() == 0) {
             buildIntermediateBuilding(IntermediateSupplyDepot.IDENT, IntermediateSupplyDepot.buildTime,
                     IntermediateSupplyDepot.mineralCost, IntermediateSupplyDepot.gasCost, IntermediateSupplyDepot.supplyProvided);
@@ -480,6 +638,27 @@ public class IntermediateDecision {
         }
     }
 
+    private static void buildIntermediateArmory() {
+
+        /**
+         * If there are enough resources and the dependency of the IntermediateArmory is met, it can be built.
+         */
+        if (IntermediateGameState.freeIntermediateBuildings.get(IntermediateFactory.IDENT) > 0 || IntermediateGameState.busyIntermediateBuildings.get(IntermediateFactory.IDENT) > 0) {
+            if (IntermediateGameState.minerals >= IntermediateArmory.mineralCost && IntermediateGameState.gas >= IntermediateArmory.gasCost) {
+                buildIntermediateBuilding(IntermediateArmory.IDENT, IntermediateArmory.buildTime,
+                        IntermediateArmory.mineralCost, IntermediateArmory.gasCost, IntermediateArmory.supplyProvided);
+            }
+        }
+
+        /**
+         * If the dependency is not met, checks if it is in the process of being built.
+         * If not, tries to build it.
+         */
+        else if (IntermediateGameState.constructionsBeingBuilt.get(IntermediateFactory.IDENT).size() == 0) {
+            buildIntermediateFactory();
+        }
+    }
+
     /**
      * Builds a unit based on the specified attributes.
      * 
@@ -502,15 +681,19 @@ public class IntermediateDecision {
             IntermediateGameState.updateIntermediateBuildings(builtFrom, "start");
             IntermediateGameState.gas -= gasCost;
             IntermediateGameState.minerals -= mineralCost;
+            decisionsMade.add(formatIntermediateDecision(unit + " (finish at " + (formatTime(IntermediateGameState.time + buildTime)) + ")"));
 
             /**
              * Updates the used supply.
              */
             IntermediateGameState.supplyUsed += supplyNeeded;
-
-            decisionsMade.add(formatIntermediateDecision(unit + " (finish at " + (formatTime(IntermediateGameState.time + buildTime)) + ")"));
             decisionMade = true;
         }
+
+        /**
+         * First 2 cases are relevant for supply.
+         */
+        else randomIntermediateDecision(2);
     }
 
     /**

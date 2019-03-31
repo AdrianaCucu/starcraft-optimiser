@@ -89,11 +89,16 @@ public class IntermediateGameState {
         constructionsBeingBuilt.put(IntermediateRefinery.IDENT, new ArrayList<Integer>());
         constructionsBeingBuilt.put(IntermediateStarport.IDENT, new ArrayList<Integer>());
         constructionsBeingBuilt.put(IntermediateSupplyDepot.IDENT, new ArrayList<Integer>());
+        constructionsBeingBuilt.put(IntermediateArmory.IDENT, new ArrayList<Integer>());
         constructionsBeingBuilt.put(IntermediateHellion.IDENT, new ArrayList<Integer>());
         constructionsBeingBuilt.put(IntermediateMarine.IDENT, new ArrayList<Integer>());
         constructionsBeingBuilt.put(IntermediateMedivac.IDENT, new ArrayList<Integer>());
         constructionsBeingBuilt.put(IntermediateViking.IDENT, new ArrayList<Integer>());
         constructionsBeingBuilt.put(IntermediateWorker.IDENT, new ArrayList<Integer>());
+        constructionsBeingBuilt.put(IntermediateBanshee.IDENT, new ArrayList<Integer>());
+        constructionsBeingBuilt.put(IntermediateMarauder.IDENT, new ArrayList<Integer>());
+        constructionsBeingBuilt.put(IntermediateTank.IDENT, new ArrayList<Integer>());
+        constructionsBeingBuilt.put(IntermediateThor.IDENT, new ArrayList<Integer>());
 
         freeIntermediateBuildings.put(IntermediateBarracks.IDENT, 0);
         freeIntermediateBuildings.put(IntermediateCommandCenter.IDENT, 1);
@@ -101,6 +106,7 @@ public class IntermediateGameState {
         freeIntermediateBuildings.put(IntermediateRefinery.IDENT, 0);
         freeIntermediateBuildings.put(IntermediateStarport.IDENT, 0);
         freeIntermediateBuildings.put(IntermediateSupplyDepot.IDENT, 0);
+        freeIntermediateBuildings.put(IntermediateArmory.IDENT, 0);
 
         busyIntermediateBuildings.put(IntermediateBarracks.IDENT, 0);
         busyIntermediateBuildings.put(IntermediateCommandCenter.IDENT, 0);
@@ -108,11 +114,16 @@ public class IntermediateGameState {
         busyIntermediateBuildings.put(IntermediateRefinery.IDENT, 0);
         busyIntermediateBuildings.put(IntermediateStarport.IDENT, 0);
         busyIntermediateBuildings.put(IntermediateSupplyDepot.IDENT, 0);
+        busyIntermediateBuildings.put(IntermediateArmory.IDENT, 0);
 
         units.put(IntermediateHellion.IDENT, 0);
         units.put(IntermediateMarine.IDENT, 0);
         units.put(IntermediateMedivac.IDENT, 0);
         units.put(IntermediateViking.IDENT, 0);
+        units.put(IntermediateBanshee.IDENT, 0);
+        units.put(IntermediateMarauder.IDENT, 0);
+        units.put(IntermediateThor.IDENT, 0);
+        units.put(IntermediateTank.IDENT, 0);
 
         workers.put(IntermediateWorker.FREE, 6);
         workers.put(IntermediateWorker.GAS, 0);
@@ -162,6 +173,22 @@ public class IntermediateGameState {
                     finishedBuildingUnit(IntermediateWorker.builtFrom);
                     break;
                 }
+                case IntermediateBanshee.IDENT: {
+                    finishedBuildingUnit(IntermediateBanshee.builtFrom);
+                    break;
+                }
+                case IntermediateMarauder.IDENT: {
+                    finishedBuildingUnit(IntermediateMarauder.builtFrom);
+                    break;
+                }
+                case IntermediateThor.IDENT: {
+                    finishedBuildingUnit(IntermediateThor.builtFrom);
+                    break;
+                }
+                case IntermediateTank.IDENT: {
+                    finishedBuildingUnit(IntermediateTank.builtFrom);
+                    break;
+                }
             }
         }
     }
@@ -194,7 +221,8 @@ public class IntermediateGameState {
      * @param key - the idetifier of the construction
      */
     private static void updateCompletedConstructions(String key) {
-        if (key.equals(IntermediateHellion.IDENT) || key.equals(IntermediateMarine.IDENT) || key.equals(IntermediateMedivac.IDENT) || key.equals(IntermediateViking.IDENT)) {
+        if (key.equals(IntermediateHellion.IDENT) || key.equals(IntermediateMarine.IDENT) || key.equals(IntermediateMedivac.IDENT) || key.equals(IntermediateViking.IDENT)
+            || key.equals(IntermediateBanshee.IDENT) || key.equals(IntermediateMarauder.IDENT) || key.equals(IntermediateThor.IDENT) || key.equals(IntermediateTank.IDENT)) {
             units.put(key, units.get(key) + 1);
             updateIntermediateBuildings(key, "finish");
         }

@@ -57,6 +57,13 @@ public class DelayGoal {
                 handleSyntaxError(element);
             }
 
+            /**
+             * If not enough arguments have been entered, the program is stopped.
+             */
+            if (! sc.hasNext()) {
+                handleSyntaxError(element);
+            }
+
             element = sc.next();
 
             /**

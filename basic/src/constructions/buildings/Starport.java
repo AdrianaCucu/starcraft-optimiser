@@ -1,11 +1,8 @@
 package constructions.buildings;
 
 public class Starport extends Building {
-    
     public static final String IDENT = "starport";
-
-    public static double mineralCost = 150;
-    public static double gasCost = 100;
-    public static int buildTime = 50;
-    public static String dependentOn = Factory.IDENT;
+    public static final double MINERAL_COST = 150;
+    public static final double GAS_COST = 100;
+    public static final int BUILD_TIME = 50;
 }

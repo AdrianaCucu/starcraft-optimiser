@@ -6,13 +6,10 @@ import java.util.ArrayList;
 
 
 public class Marine extends Unit {
-
     public static final String IDENT = "marine";
     public static final int INDEX = 0;
-
-    public static double mineralCost = 50;
-    public static double gasCost = 0;
-    public static int buildTime = 25;
-    public static ArrayList<String> dependentOn = new ArrayList<>();
-    public static String builtFrom = Barracks.IDENT;
+    public static final double MINERAL_COST = 50;
+    public static final double GAS_COST = 0;
+    public static final int BUILD_TIME = 25;
+    public static final String BUILT_FROM = Barracks.IDENT;
 }

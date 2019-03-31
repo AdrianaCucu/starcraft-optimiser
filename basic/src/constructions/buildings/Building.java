@@ -2,6 +2,6 @@ package constructions.buildings;
 
 import constructions.*;
 
-public class Building extends IntermediateConstruction {
+public abstract class Building extends Construction {
 
 }

@@ -1,5 +1,5 @@
 package constructions;
 
-public class Construction {
+public abstract class Construction {
 
 }

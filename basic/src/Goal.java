@@ -44,7 +44,7 @@ public class Goal {
 
         while (sc.hasNext()) {
 
-            String element = sc.next();
+            String element = sc.next().toLowerCase();
             int num = 0;
 
             /**
@@ -57,7 +57,7 @@ public class Goal {
                handleSyntaxError(element);
             }
 
-            element = sc.next();
+            element = sc.next().toLowerCase();
 
             /**
              * Checks that every character is a letter with a possible "," at the end.

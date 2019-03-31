@@ -469,7 +469,7 @@ public class Decision {
         GameState.updateBuildings(builtFrom, "start");
         GameState.gas -= gasCost;
         GameState.minerals -= mineralCost;
-        decisionsMade.add(formatDecision("start building " + unit + " (finish at " + (GameState.time + buildTime) + ")"));
+        decisionsMade.add(formatDecision(unit + " (finish at " + (formatTime(GameState.time + buildTime)) + ")"));
         decisionMade = true;
     }
 
@@ -487,7 +487,7 @@ public class Decision {
         GameState.constructionsBeingBuilt.put(building, durations);
         GameState.gas -= gasCost;
         GameState.minerals -= mineralCost;
-        decisionsMade.add(formatDecision("start building " + building + " (finish at " + (GameState.time + buildTime) + ")"));
+        decisionsMade.add(formatDecision(building + " (finish at " + (formatTime(GameState.time + buildTime)) + ")"));
         decisionMade = true;
     }
 
@@ -507,23 +507,50 @@ public class Decision {
     }
 
     /**
+     * Formats the time for printing.
+     *
+     * @param time - the time in seconds
+     * @return - the formatted time as a String
+     */
+    public static String formatTime(int time) {
+
+        String timestamp = "";
+        int minutes = time / 60;
+        int seconds = time % 60;
+
+        if (minutes == 0) {
+            timestamp += "0";
+        } else {
+            timestamp += minutes;
+        }
+
+        timestamp += ":";
+
+        if (seconds < 10) {
+            timestamp += "0";
+            if (seconds == 0) {
+                timestamp += "0";
+            } else {
+                timestamp += seconds;
+            }
+
+        } else {
+            timestamp += seconds;
+        }
+        return timestamp;
+    }
+
+    /**
      * Formats the output elements with empty spaces for readability.
      * 
      * https://stackoverflow.com/questions/13475388/generate-fixed-length-strings-filled-with-whitespaces
      */
     public static String formatDecision(String decision) {
 
-        String output = String.format("%-5.5s", GameState.time)
-                        + String.format("%-45.45s", decision) 
-                        + String.format("%-12.12s", " gas: " + Math.round(GameState.gas))
-                        + String.format("%-17.17s", " minerals: " + Math.round(GameState.minerals));
+        String timestamp = formatTime(GameState.time);
 
-        // number of units when each action is performed
-        for (Map.Entry<String, Integer> entry: GameState.units.entrySet()) {
-            if (GameState.goal.get(entry.getKey()) != 0) {
-                output += String.format("%-13.13s", entry.getKey() + "s: " + entry.getValue());
-            }
-        }
+        String output = String.format("%-32.32s", decision)
+                        + String.format("%-6.6s", timestamp);
 
         return output;
     }

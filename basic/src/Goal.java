@@ -39,7 +39,7 @@ public class Goal {
     }
 
     /**
-     * Parses the goals and sets the posiible decisions that are relevant for the goal.
+     * Parses the goals and sets the possible decisions that are relevant for the goal.
      * 
      * @param input - the goal
      */

@@ -1,8 +1,10 @@
 # starcraft-optimiser
-starcraft-optimiser is a program that generates an optimised build order for the Terran race.
+
+starcraft-optimiser is a program that generates an optimised build order for
+    Starcraft II: WoL for the Terran race.
 
 This folder consists of two folders called basic and extensions, which contain the program for 
-the basic deliverable and two programs that has extensions implemented respectively.
+the basic deliverable and two programs that have extensions implemented respectively.
 
 # Compilation
 Program is to be compiled within the source folder accordingly:
@@ -13,7 +15,7 @@ javac *.java
 
 java StarcraftOptimiser <goal>
 
-some examples of how <goal> should look are:
+Some examples of how <goal> should look are:
 - "6 marines"
 - "6 marines, 1 hellion, 9 medivacs"
 
@@ -24,3 +26,5 @@ javac RealisticTimings <goal>
 # Usage-intermediate
 
 java IntermediateStarcraftOptimiser <goal>
+
+Note: when attempting to buil siege tanks, they need to be passed in as "tanks" and not "siege tanks"

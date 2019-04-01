@@ -221,7 +221,7 @@ public class Decision {
                      */
                     for (String unit: possibleDecisions.keySet()) {
                         for (Integer seconds: GameState.constructionsBeingBuilt.get(unit)) {
-                            if (seconds < Worker.buildTime) {
+                            if (seconds < Worker.BUILD_TIME) {
                                 build = false;
                             }
                         }
@@ -263,8 +263,8 @@ public class Decision {
          * If a free Barracks exists and there are enough resources, a Marine can be built.
          */
         if (GameState.freeBuildings.get(Barracks.IDENT) > 0) {
-            if (GameState.minerals >= Marine.mineralCost && GameState.gas >= Marine.gasCost) {
-                buildUnit(Marine.IDENT, Marine.builtFrom, Marine.buildTime, Marine.mineralCost, Marine.gasCost);
+            if (GameState.minerals >= Marine.MINERAL_COST && GameState.gas >= Marine.GAS_COST) {
+                buildUnit(Marine.IDENT, Marine.BUILT_FROM, Marine.BUILD_TIME, Marine.MINERAL_COST, Marine.GAS_COST);
             }
         }
 
@@ -284,8 +284,8 @@ public class Decision {
          * If a free Factory exists and there are enough resources, a Hellion can be built.
          */
         if (GameState.freeBuildings.get(Factory.IDENT) > 0) {
-            if (GameState.minerals >= Hellion.mineralCost && GameState.gas >= Hellion.gasCost) {
-                buildUnit(Hellion.IDENT, Hellion.builtFrom, Hellion.buildTime, Hellion.mineralCost, Hellion.gasCost);
+            if (GameState.minerals >= Hellion.MINERAL_COST && GameState.gas >= Hellion.GAS_COST) {
+                buildUnit(Hellion.IDENT, Hellion.BUILT_FROM, Hellion.BUILD_TIME, Hellion.MINERAL_COST, Hellion.GAS_COST);
             }
         } 
             
@@ -305,8 +305,8 @@ public class Decision {
          * If a free Starport exists and there are enough resources, a Medivac can be built.
          */
          if (GameState.freeBuildings.get(Starport.IDENT) > 0) {
-            if (GameState.minerals >= Medivac.mineralCost && GameState.gas >= Medivac.gasCost) {
-                buildUnit(Medivac.IDENT, Medivac.builtFrom, Medivac.buildTime, Medivac.mineralCost, Medivac.gasCost);
+            if (GameState.minerals >= Medivac.MINERAL_COST && GameState.gas >= Medivac.GAS_COST) {
+                buildUnit(Medivac.IDENT, Medivac.BUILT_FROM, Medivac.BUILD_TIME, Medivac.MINERAL_COST, Medivac.GAS_COST);
             }
         } 
 
@@ -326,8 +326,8 @@ public class Decision {
          * If a free Starport exists and there are enough resources, a Viking can be built.
          */
         if (GameState.freeBuildings.get(Starport.IDENT) > 0) {
-            if (GameState.minerals >= Viking.mineralCost && GameState.gas >= Viking.gasCost) {
-                buildUnit(Viking.IDENT, Viking.builtFrom, Viking.buildTime, Viking.mineralCost, Viking.gasCost);
+            if (GameState.minerals >= Viking.MINERAL_COST && GameState.gas >= Viking.GAS_COST) {
+                buildUnit(Viking.IDENT, Viking.BUILT_FROM, Viking.BUILD_TIME, Viking.MINERAL_COST, Viking.GAS_COST);
             }
         } 
 
@@ -347,8 +347,8 @@ public class Decision {
          * If a free Command Center exists and there are enough resources, a Worker can be built.
          */
         if (GameState.freeBuildings.get(CommandCenter.IDENT) > 0) {
-            if (GameState.minerals >= Worker.mineralCost && GameState.gas >= Worker.gasCost) {
-                buildUnit(Worker.IDENT, Worker.builtFrom, Worker.buildTime, Worker.mineralCost, Worker.gasCost);
+            if (GameState.minerals >= Worker.MINERAL_COST && GameState.gas >= Worker.GAS_COST) {
+                buildUnit(Worker.IDENT, Worker.BUILT_FROM, Worker.BUILD_TIME, Worker.MINERAL_COST, Worker.GAS_COST);
             }
         } 
     }
@@ -359,8 +359,8 @@ public class Decision {
          * If there are enough resources and the dependency of the Barracks is met, it can be built.
          */
         if (GameState.freeBuildings.get(SupplyDepot.IDENT) > 0 || GameState.busyBuildings.get(SupplyDepot.IDENT) > 0) {
-            if (GameState.minerals >= Barracks.mineralCost && GameState.gas >= Barracks.gasCost) {
-                buildBuilding(Barracks.IDENT, Barracks.buildTime, Barracks.mineralCost, Barracks.gasCost);
+            if (GameState.minerals >= Barracks.MINERAL_COST && GameState.gas >= Barracks.GAS_COST) {
+                buildBuilding(Barracks.IDENT, Barracks.BUILD_TIME, Barracks.MINERAL_COST, Barracks.GAS_COST);
             }
         }
         
@@ -379,12 +379,12 @@ public class Decision {
          * If there are enough resources for a Command Center, it can be built.
          * A maximum of 3 Command Centers can be build, otherwise efficiency decreases.
          */
-        if (GameState.minerals >= CommandCenter.mineralCost && GameState.gas >= CommandCenter.gasCost
+        if (GameState.minerals >= CommandCenter.MINERAL_COST && GameState.gas >= CommandCenter.GAS_COST
             && GameState.freeBuildings.get(CommandCenter.IDENT)
             + GameState.busyBuildings.get(CommandCenter.IDENT)
             + GameState.constructionsBeingBuilt.get(CommandCenter.IDENT).size() < 3) {
 
-            buildBuilding(CommandCenter.IDENT, CommandCenter.buildTime, CommandCenter.mineralCost, CommandCenter.gasCost);
+            buildBuilding(CommandCenter.IDENT, CommandCenter.BUILD_TIME, CommandCenter.MINERAL_COST, CommandCenter.GAS_COST);
         }
     }
 
@@ -394,8 +394,8 @@ public class Decision {
          * If there are enough resources and the dependency of the Starport is met, it can be built.
          */
         if (GameState.freeBuildings.get(Factory.IDENT) > 0 || GameState.busyBuildings.get(Factory.IDENT) > 0) {
-            if (GameState.minerals >= Starport.mineralCost && GameState.gas >= Starport.gasCost) {
-                buildBuilding(Starport.IDENT, Starport.buildTime, Starport.mineralCost, Starport.gasCost);
+            if (GameState.minerals >= Starport.MINERAL_COST && GameState.gas >= Starport.GAS_COST) {
+                buildBuilding(Starport.IDENT, Starport.BUILD_TIME, Starport.MINERAL_COST, Starport.GAS_COST);
             }
         }
         
@@ -413,8 +413,8 @@ public class Decision {
         /**
          * If there are enough resources for a Supply Depot, it can be built.
          */
-        if (GameState.minerals >= SupplyDepot.mineralCost && GameState.gas >= SupplyDepot.gasCost) {
-            buildBuilding(SupplyDepot.IDENT, SupplyDepot.buildTime, SupplyDepot.mineralCost, SupplyDepot.gasCost);
+        if (GameState.minerals >= SupplyDepot.MINERAL_COST && GameState.gas >= SupplyDepot.GAS_COST) {
+            buildBuilding(SupplyDepot.IDENT, SupplyDepot.BUILD_TIME, SupplyDepot.MINERAL_COST, SupplyDepot.GAS_COST);
         }
     }
 
@@ -424,12 +424,12 @@ public class Decision {
          * If there are enough resources for a Refinery, it can be built.
          * The maximum number of refineries that can be build is the number of geysers.
          */
-        if (GameState.minerals >= Refinery.mineralCost && GameState.gas >= Refinery.gasCost
+        if (GameState.minerals >= Refinery.MINERAL_COST && GameState.gas >= Refinery.GAS_COST
             && GameState.freeBuildings.get(Refinery.IDENT)
             + GameState.busyBuildings.get(Refinery.IDENT)
             + GameState.constructionsBeingBuilt.get(Refinery.IDENT).size() < GameState.geysers) {
 
-             buildBuilding(Refinery.IDENT, Refinery.buildTime, Refinery.mineralCost, Refinery.gasCost);
+             buildBuilding(Refinery.IDENT, Refinery.BUILD_TIME, Refinery.MINERAL_COST, Refinery.GAS_COST);
         }
     }
 
@@ -439,8 +439,8 @@ public class Decision {
          * If there are enough resources and the dependency of the Factory is met, it can be built.
          */
         if (GameState.freeBuildings.get(Barracks.IDENT) > 0 || GameState.busyBuildings.get(Barracks.IDENT) > 0) {
-            if (GameState.minerals >= Factory.mineralCost && GameState.gas >= Factory.gasCost) {
-                buildBuilding(Factory.IDENT, Factory.buildTime, Factory.mineralCost, Factory.gasCost);
+            if (GameState.minerals >= Factory.MINERAL_COST && GameState.gas >= Factory.GAS_COST) {
+                buildBuilding(Factory.IDENT, Factory.BUILD_TIME, Factory.MINERAL_COST, Factory.GAS_COST);
             }
         } 
                 

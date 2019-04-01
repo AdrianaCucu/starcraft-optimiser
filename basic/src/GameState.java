@@ -111,23 +111,23 @@ public class GameState {
         else if (action.equals("finish")) {
             switch (key) {
                 case Hellion.IDENT: {
-                    finishedBuildingUnit(Hellion.builtFrom);
+                    finishedBuildingUnit(Hellion.BUILT_FROM);
                     break;
                 }
                 case Marine.IDENT: {
-                    finishedBuildingUnit(Marine.builtFrom);
+                    finishedBuildingUnit(Marine.BUILT_FROM);
                     break;
                 }
                 case Medivac.IDENT: {
-                    finishedBuildingUnit(Medivac.builtFrom);
+                    finishedBuildingUnit(Medivac.BUILT_FROM);
                     break;
                 }
                 case Viking.IDENT: {
-                    finishedBuildingUnit(Viking.builtFrom);
+                    finishedBuildingUnit(Viking.BUILT_FROM);
                     break;
                 }
                 case Worker.IDENT: {
-                    finishedBuildingUnit(Worker.builtFrom);
+                    finishedBuildingUnit(Worker.BUILT_FROM);
                     break;
                 }
             }

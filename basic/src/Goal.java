@@ -44,7 +44,7 @@ public class Goal {
 
         while (sc.hasNext()) {
 
-            String element = sc.next();
+            String element = sc.next().toLowerCase();
             int num = 0;
 
             /**

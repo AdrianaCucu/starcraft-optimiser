@@ -11,7 +11,7 @@ Program is to be compiled within the source folder accordingly:
 
 javac *.java
 
-### Usage-basic
+## Usage-basic
 
 java StarcraftOptimiser \<goal\>
 
@@ -19,11 +19,11 @@ Some examples of how \<goal\> should look are:
 - "6 marines"
 - "6 marines, 1 hellion, 9 medivacs"
 
-### Usage-delay
+## Usage-delay
 
 javac RealisticTimings \<goal\>
 
-### Usage-intermediate
+## Usage-intermediate
 
 java IntermediateStarcraftOptimiser \<goal\>
 

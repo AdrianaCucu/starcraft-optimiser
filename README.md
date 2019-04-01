@@ -21,10 +21,10 @@ Some examples of how the goal should look are:
 
 # Usage-delay
 
-javac RealisticTimings <goal>
+javac RealisticTimings \<goal\>
 
 # Usage-intermediate
 
-java IntermediateStarcraftOptimiser <goal>
+java IntermediateStarcraftOptimiser \<goal\>
 
 Note: when attempting to buil siege tanks, they need to be passed in as "tanks" and not "siege tanks"

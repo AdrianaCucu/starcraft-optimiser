@@ -21,6 +21,6 @@ some examples of how <goal> should look are:
 
 javac RealisticTimings <goal>
 
-#Usage-intermediate
+# Usage-intermediate
 
 java IntermediateStarcraftOptimiser <goal>

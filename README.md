@@ -15,7 +15,7 @@ javac *.java
 
 java StarcraftOptimiser <goal>
 
-Some examples of how <goal> should look are:
+Some examples of how the goal should look are:
 - "6 marines"
 - "6 marines, 1 hellion, 9 medivacs"
 

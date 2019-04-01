@@ -13,7 +13,7 @@ javac *.java
 
 # Usage-basic
 
-java StarcraftOptimiser <goal>
+java StarcraftOptimiser \<goal\>
 
 Some examples of how the goal should look are:
 - "6 marines"

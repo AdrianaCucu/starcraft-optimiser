@@ -1,5 +1,6 @@
 # starcraft-optimiser
-starcraft-optimiser is a program that generates an optimised build order for the Terran race.
+starcraft-optimiser is a program that generates an optimised build order for Starcraft II:
+WoL for the Terran race.
 
 This folder consists of two folders called basic and extensions, which contain the program for 
 the basic deliverable and two programs that has extensions implemented respectively.

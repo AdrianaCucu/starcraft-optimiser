@@ -31,6 +31,11 @@ public class Goal {
         }
 
         return goal;
+
+        /**
+         * Tests that the goal is set properly.
+         */
+        // System.out.println(goal);
     }
 
     /**

@@ -142,6 +142,12 @@ public class GameState {
     private static void updateResources() {
 
         /**
+         * Tests that the resources are updated properly.
+         */
+        // System.out.println("minerals: " + minerals);
+        // System.out.println("gas: " + gas);
+
+        /**
          * 41 minerals / minute or 20 minerals / minute
          */
         if (workers.get(Worker.MINERALS) <= patches * 2) {
@@ -154,6 +160,12 @@ public class GameState {
          * 38 gas / minute
          */
         gas += workers.get(Worker.GAS) * (38.0 / 60);
+
+        /**
+         * Tests that the resources are updated properly.
+         */
+        // System.out.println("minerals: " + minerals);
+        // System.out.println("gas: " + gas);
     }
 
     /**
@@ -162,6 +174,7 @@ public class GameState {
      * @param key - the idetifier of the construction
      */
     private static void updateCompletedConstructions(String key) {
+
         if (key.equals(Hellion.IDENT) || key.equals(Marine.IDENT) || key.equals(Medivac.IDENT) || key.equals(Viking.IDENT)) {
             units.put(key, units.get(key) + 1);
             updateBuildings(key, "finish");
@@ -181,6 +194,14 @@ public class GameState {
      * Updates the constructions that are in the process of being built.
      */
     private static void updateConstructionsBeingBuilt() {
+
+        /**
+         * Tests that the constructions are updated properly.
+         */
+        // System.out.println("units: " + units);
+        // System.out.println("workers: " + workers);
+        // System.out.println("free buildings: " + freeBuildings);
+        // System.out.println("busy buildings: " + busyBuildings);
 
         if (constructionsBeingBuilt.size() != 0) {
 
@@ -215,12 +236,27 @@ public class GameState {
                 constructionsBeingBuilt.put(key, newDurations);
             }
         }
+
+        /**
+         * Tests that the constructions are updated properly.
+         */
+        // System.out.println("units: " + units);
+        // System.out.println("workers: " + workers);
+        // System.out.println("free buildings: " + freeBuildings);
+        // System.out.println("busy buildings: " + busyBuildings);
     }
 
     /**
      * Returns true if the goal has been met and false otherwise.
      */
     private static boolean goalMet() {
+
+        /**
+         * Tests that the goal is checked properly.
+         */
+        // System.out.println("units: " + units);
+        // System.out.println("goal: " + goal);
+
         for (String key : goal.keySet()) {
             if (units.get(key) < goal.get(key)){
                 return false;

@@ -13,6 +13,11 @@ public class StarcraftOptimiser {
          * Makes decisions until the goal is met.
          */
         while (!Goal.goalAchieved) {
+
+            /**
+             * Tests that the decisions are made properly.
+             */
+            // System.out.println("goal achieved: " + Goal.goalAchieved);
             Decision.makeDecision();
         }
 

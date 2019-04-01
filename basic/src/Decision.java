@@ -471,6 +471,13 @@ public class Decision {
         GameState.minerals -= mineralCost;
         decisionsMade.add(formatDecision(unit + " (finish at " + (formatTime(GameState.time + buildTime)) + ")"));
         decisionMade = true;
+
+        /**
+         * Tests that the unit is built properly.
+         */
+        // System.out.println("unit: " + unit);
+        // System.out.println("minerals: " + GameState.minerals);
+        // System.out.println("gas: " + GameState.gas);
     }
 
     /**
@@ -489,6 +496,13 @@ public class Decision {
         GameState.minerals -= mineralCost;
         decisionsMade.add(formatDecision(building + " (finish at " + (formatTime(GameState.time + buildTime)) + ")"));
         decisionMade = true;
+
+        /**
+         * Tests that the building is built properly.
+         */
+        // System.out.println("building: " + building);
+        // System.out.println("minerals: " + GameState.minerals);
+        // System.out.println("gas: " + GameState.gas);
     }
 
     /**

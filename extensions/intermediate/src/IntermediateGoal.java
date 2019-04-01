@@ -76,7 +76,7 @@ public class IntermediateGoal {
                 /**
                  * Removes the commas in order to validate the String.
                  */
-                element = element.replaceAll(",", "");
+                element = element.replaceAll(",", "").toLowerCase();
 
                 /**
                  * Turns the plural words into singular words in order to validate the String.

@@ -28,3 +28,7 @@ javac RealisticTimings \<goal\>
 java IntermediateStarcraftOptimiser \<goal\>
 
 Note: when attempting to buil siege tanks, they need to be passed in as "tanks" and not "siege tanks"
+
+## The Team 🚀
+
+Built with ❤ by [A.C.](https://github.com/AdrianaCucu) and [meills](https://github.com/meills)

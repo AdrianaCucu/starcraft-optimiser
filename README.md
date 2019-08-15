@@ -15,19 +15,19 @@ javac *.java
 
 java StarcraftOptimiser \<goal\>
 
-Some examples of how \<goal\> should look are:
+Some examples of how \<goal\> should look like are:
 - "6 marines"
 - "6 marines, 1 hellion, 9 medivacs"
 
 ## Usage-delay
 
-javac RealisticTimings \<goal\>
+java RealisticTimings \<goal\>
 
 ## Usage-intermediate
 
 java IntermediateStarcraftOptimiser \<goal\>
 
-Note: when attempting to buil siege tanks, they need to be passed in as "tanks" and not "siege tanks"
+Note: when attempting to build siege tanks, they need to be passed in as "tanks" and not "siege tanks"
 
 ## The Team 🚀
 
